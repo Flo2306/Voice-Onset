@@ -2,13 +2,13 @@
 
 This module can be used to estimate word onset data using a method that is based on voice transcription. It works by continuously splitting the audio file until the voice recognition just recognizes the input word. It also allows for words with high similarity (e.g., ship & boat) to be considered correct responses depending on a value you can decide yourself. Now why would you use my approach compared to other approaches available already?
 
-A list of pros is:
+Pro:
 
 - It is similarly accurate to existing approaches (e.g. high correlation r=0.8 with Chronset).
 - It allows for automatic target word application (e.g. the picture shown is a boat and only if the said word is "boat", the algorithm will return the onset value)
 - It allows for the target word to be semantically related to the shown picture (e.g. the picture shown is a boat and the said word is "ship", the response would still be considered correct)
 
-A list of cons is:
+Con:
 
 - The audio quality plays a big role in how many audio files are classified. Using a computer microphone, we lost about 15% of the data to the voice transcription not recognizing the correct word.
 - It can take quite some time as it is splitting the document multiple times (a 5 second recording takes about 5 seconds to process, the algorithm has a complexity of log(n))
