@@ -402,7 +402,3 @@ def example_for_folder():
     os.chdir(original_path)
     df.to_csv("Answers_as_text_for_testing_3.csv")
 
-example_for_folder()
-
-#binary_search("2_116.wav", language_used= "en-US", target_word="bush")
-
