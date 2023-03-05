@@ -140,7 +140,6 @@ def binary_search(audio_input, language_used, target_word, decision_value = 0.8,
         #Returning the appropriate value
         onset_value_found = list_of_intervals[0]
         onset_value_found1 = onset_value_found.item()
-        print(onset_value_found1)
         #Removing the newly created audio file
         os.remove(audio_input)
         #Return the best word found instead of the target word?
@@ -180,7 +179,6 @@ def binary_search(audio_input, language_used, target_word, decision_value = 0.8,
         if run_already == 0:
             #Finding the potential words in the audio input
             words_found = word_recognizer(audio_input)
-            print(words_found)
             cosine_similarity_list = []
             #Calculating the cosine values for each word in the output
             for word in words_found:
@@ -382,7 +380,6 @@ def example_for_folder():
             os.chdir(new_path + os.sep + file1)
             files_in_folder1 = glob.glob("*")
             for file2 in files_in_folder1:
-                print(file2)
                 target_word_row = datafile.loc[datafile["File"] == file2, "Target"].values
                 try: 
                     target_word = str(target_word_row[0])
