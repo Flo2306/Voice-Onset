@@ -11,13 +11,9 @@
 #Build small library of example audio files and target words in multiple languages 
 #Could be English, German, Dutch, and French? to show versailitiy of approach 
 
-#To active my online environement 
-#conda activate onlineenv
-
 import speech_recognition as sr
 import pandas as pd
 import numpy as np
-import glob
 import os
 import soundfile
 from sklearn.metrics.pairwise import cosine_similarity
@@ -33,25 +29,15 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 #would be re-instating the model again and again which I consider 
 #not necessary making the code slower 
 
-#onset is the time from which you want to start looking at the audio
-#onset = 0.3
-#offset is the latest moment in your recording you want to look at, usually the length of the recording
-#offset = 5
-#increment_increase is the value in which you want the list to increase, the lower the value the slower but accurate is 
-#the binary search
-#increment_increase = 0.01
-#increment_increase_list =  list(np.arange(onset,offset,increment_increase))
+#language = "en-AU"
+#model = SentenceTransformer('all-mpnet-base-v2')
+#I selected a good model from SentenceTransformer: https://www.sbert.net/docs/pretrained_models.html
 
-language = "en-AU"
-model = SentenceTransformer('all-mpnet-base-v2')
-
-#Link to best Model in SentenceTransformer: https://huggingface.co/sentence-transformers/all-mpnet-base-v2
-
-if language[0:2] != "en": 
-    model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
+#if language[0:2] != "en": 
+    #model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
     #If Language is not English, recommend using the model above. Link: https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2
 
-def binary_search(audio_input, language_used, target_word, decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
+def binary_search(audio_input, language_used, target_word, model = SentenceTransformer('all-mpnet-base-v2'), decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
     """Function using binary search in combination wih transcripion to estimate word onset.
 
     This function can estimate the onset time of a audio file by repeately splitting the file 
@@ -177,8 +163,14 @@ def binary_search(audio_input, language_used, target_word, decision_value = 0.8,
         text_str = str(text)
         #Used for set up of the model. 
         if run_already == 0:
+            
+            if language_used[0:2] != "en": 
+                model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
+                #If Language is not English, recommend using the model above. Link: https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2
+
+
             #Finding the potential words in the audio input
-            words_found = word_recognizer(audio_input)
+            words_found = word_recognizer(audio_input, language = language_used)
             cosine_similarity_list = []
             #Calculating the cosine values for each word in the output
             for word in words_found:
@@ -306,7 +298,7 @@ def adjust_audio_input(file_name):
     soundfile.write(new_name, data, samplerate, subtype='PCM_16')
     return new_name
 
-def word_recognizer(sound_file):
+def word_recognizer(sound_file, language):
     """Function used to recognize the words said. 
 
     This function returns a list of the words found in the full audio file 
@@ -335,8 +327,7 @@ def word_recognizer(sound_file):
             audio_data = r.record(source)
             # recognize (convert from speech to text)
             text = r.recognize_google(audio_data, language=language, show_all=True)
-            #if len(text) == 0: 
-                #text = r.recognize_sphinx(audio_data, language=language, show_all=True)
+            
             words_found = list(text.values())
             #Complicated for loop to deal with return data from r.recongnize_google 
             for word in words_found:
@@ -347,55 +338,3 @@ def word_recognizer(sound_file):
             return(list_for_output)
         except:
             return(list_for_output)
-
-
-#This function will not be included in the actual programm but I am using it 
-#to check my data and do all that 
-
-def example_for_folder(): 
-    model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
-    #decision_value = finding_appropriate_value(model)
-    decision_value = 0.5
-    #defining the paths to use
-    original_path = os.getcwd()
-    path_to_audios = original_path + os.sep + "Voice Data"
-    datafile = pd.read_csv("Combined Values from Participants.csv")
-
-    #creating empty lists and setting it up 
-    os.chdir(path_to_audios)
-    files = glob.glob("*")
-    list_of_answers = []
-    list_of_file_names = []
-    list_of_onset = []
-
-    for file in files: 
-        new_path = path_to_audios + os.sep + file
-        os.chdir(new_path)
-        files_in_folder = glob.glob("*")
-        for file1 in files_in_folder:
-            if file1 == "1":
-                nothing = 0 
-            else:
-                continue
-            os.chdir(new_path + os.sep + file1)
-            files_in_folder1 = glob.glob("*")
-            for file2 in files_in_folder1:
-                target_word_row = datafile.loc[datafile["File"] == file2, "Target"].values
-                try: 
-                    target_word = str(target_word_row[0])
-                except: 
-                    continue
-                word_used, outcome_value = binary_search(file2, "en-US", target_word, decision_value=decision_value)
-                list_of_answers.append(word_used)
-                list_of_file_names.append(file2)
-                list_of_onset.append(outcome_value)
-
-    #Creating a dataframe and saving the results into one file
-    df = pd.DataFrame()
-    df['File']=list_of_file_names
-    df['Answer']=list_of_answers
-    df['Onset'] = list_of_onset
-
-    os.chdir(original_path)
-    df.to_csv("Answers_as_text_for_testing_3.csv")
-
