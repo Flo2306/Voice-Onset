@@ -207,7 +207,7 @@ def binary_search(audio_input, language_used, target_word, model = SentenceTrans
             list_of_intervals1 = list_of_intervals[low:mid_index]
             return binary_search(audio_input, language_used, target_word, list_needed = 1, list_of_increment_values = list_of_intervals1, run_already=1, words_found = words_found, best_word = best_word, adjustment_needed=1)
 
-def word_distance_caluclated(target_word, word_found, model):
+def word_distance_caluclated(target_word, word_found, model_name):
     """Function calculating cosine similarity between target word and word found
 
     This function calculates the cosine similarity between two words and returns 
@@ -230,6 +230,7 @@ def word_distance_caluclated(target_word, word_found, model):
         Returns the cosine similarity between the target word and the found word
     """
     #Model for calculating word embeddings using spacy 
+    model = SentenceTransformer(model_name)
     sen = [word_found, target_word] 
     sen_embeddings = model.encode(sen)
     outcome = cosine_similarity(sen_embeddings)
