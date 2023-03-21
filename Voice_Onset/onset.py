@@ -163,7 +163,6 @@ def binary_search(audio_input, language_used, target_word, model = SentenceTrans
         text_str = str(text)
         #Used for set up of the model. 
         if run_already == 0:
-            
             if language_used[0:2] != "en": 
                 model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
                 #If Language is not English, recommend using the model above. Link: https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2
@@ -179,7 +178,7 @@ def binary_search(audio_input, language_used, target_word, model = SentenceTrans
                 if type(word) != str:
                     words_found.remove(word)
                     continue
-                correct_value = word_distance_caluclated(target_word, word, model = model)
+                correct_value = word_distance_caluclated(target_word, word, model_name = model)
                 #Appending the values to the list 
                 cosine_similarity_list.append(correct_value)
 
