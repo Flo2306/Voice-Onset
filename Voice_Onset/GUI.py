@@ -10,6 +10,12 @@ from Voice_Onset import onset
 
 list_of_languages = ["en-AU", "en-UK", "en-US"]
 
+#Running all guis
+def run_gui():
+    gui_1() 
+    gui_2()
+    gui_3()
+
 def gui_1(): 
     def on_calculate_click():
         # Get the input values
