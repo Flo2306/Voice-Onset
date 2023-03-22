@@ -7,9 +7,6 @@
 
 #Things to improve: 
 #Include second r.recognize class in code but will most likely require some api access set up? 
-#Use word_recognizer function in binary search to make code easier to read 
-#Build small library of example audio files and target words in multiple languages 
-#Could be English, German, Dutch, and French? to show versailitiy of approach 
 
 import speech_recognition as sr
 import pandas as pd
@@ -20,22 +17,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 from scipy.io.wavfile import read, write
 import numpy as np
-
-#Was necessary for me due to issues with hugging face, may not be necessary on your computer
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
-#I am defining a few global variables here due to simplicity for the code
-#An example of this is the definition of model here as any other way 
-#would be re-instating the model again and again which I consider 
-#not necessary making the code slower 
-
-#language = "en-AU"
-#model = SentenceTransformer('all-mpnet-base-v2')
-#I selected a good model from SentenceTransformer: https://www.sbert.net/docs/pretrained_models.html
-
-#if language[0:2] != "en": 
-    #model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
-    #If Language is not English, recommend using the model above. Link: https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2
 
 def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
     """Function using binary search in combination wih transcripion to estimate word onset.
