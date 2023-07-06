@@ -20,7 +20,8 @@ class TestBinarySearch(unittest.TestCase):
     def test_binary_search(self):
         # Test with English audio file and target word "hello"
         audio_path = self.get_audio_path("001_1.wav")
-        print(audio_path)
+        audio_file = "001.1.wav"
+        os.chdir(audio_path)
         language_used = "en-US"
         target_word = "hello"
         self.assertTrue(os.path.isfile(audio_input), f"File '{audio_input}' not found.")
