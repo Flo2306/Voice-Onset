@@ -24,8 +24,8 @@ class TestBinarySearch(unittest.TestCase):
         os.chdir(audio_path)
         language_used = "en-US"
         target_word = "hello"
-        self.assertTrue(os.path.isfile(audio_input), f"File '{audio_input}' not found.")
-        found_word, onset_value_found = onset.binary_search(audio_input, language_used, target_word, decision_value=0)
+        self.assertTrue(os.path.isfile(audio_file), f"File '{audio_file}' not found.")
+        found_word, onset_value_found = onset.binary_search(audio_file, language_used, target_word, decision_value=0)
         self.assertAlmostEqual(float(onset_value_found), 0.6498, places=2)
         print("Test English Audio File passed")
 
