@@ -2,6 +2,17 @@ import unittest
 import os
 from Voice_Onset import onset
 
+def run_tests():
+    # Create a test suite
+    suite = unittest.TestSuite()
+
+    # Add the test cases to the suite
+    suite.addTest(TestBinarySearch('test_binary_search'))
+    suite.addTest(TestBinarySearch('test_cosine_similarity'))
+
+    # Run the test suite
+    unittest.TextTestRunner().run(suite)
+
 class TestBinarySearch(unittest.TestCase):
     def test_binary_search(self):
         current_directory = os.getcwd()
@@ -41,4 +52,4 @@ class TestBinarySearch(unittest.TestCase):
         print("Test German Words Passed")
 
 if __name__ == '__main__':
-    unittest.main()
+    run_tests()
