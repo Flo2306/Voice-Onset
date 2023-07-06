@@ -83,6 +83,9 @@ def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-ba
     current_directory_list = os.listdir()
     if audio_input in current_directory_list: 
         print("THANK FUCK")
+    else: 
+        print("FUCK OFF")
+    print(audio_input)
     
     if adjustment_needed == 0:
         audio_input = adjust_audio_input(audio_input)
