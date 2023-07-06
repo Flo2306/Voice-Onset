@@ -80,14 +80,6 @@ def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-ba
     """
     #Creating a audio file that can be used for input. This file will be called "NEW_" plus the name of 
     #the original audio file but it will be removed once the code is finished
-    current_directory_list = os.listdir()
-    print(current_directory_list)
-    if audio_input in current_directory_list: 
-        print("THANK FUCK")
-    else: 
-        print("FUCK OFF")
-    print(audio_input)
-    
     if adjustment_needed == 0:
         audio_input = adjust_audio_input(audio_input)
 
