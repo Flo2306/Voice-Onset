@@ -19,6 +19,10 @@ The use case I can think of the most is to use it in response time related exper
 
 Potential future functions could expand to keyword search in audio recordings as the approach should work for this kind too. Another potential expansion is to implement different ways of voice recognition which could improve the accuracy of the algorithm.
 
+# Troubleshooting 
+
+For Mac users, you need to install a program needed to deal with FLAC files as it is part of the necessary modules. You can do so by first installing brew if you do not have it, more information under https://brew.sh. Next, you need to install the program to deal with the FLAC files using brew install flac in your terminal. 
+
 The current members of this module are:
 
 Florian Burger, [flo.burger@sydney.edu.au](mailto:flo.burger@sydney.edu.au)
