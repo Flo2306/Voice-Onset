@@ -1,6 +1,5 @@
 import unittest
 import os
-import site
 from Voice_Onset import onset
 
 def run_tests():
@@ -35,9 +34,8 @@ class TestBinarySearch(unittest.TestCase):
         print("Test Similar Words Passed")
 
     def find_audio_files(self):
-        site_packages_dir = site.getsitepackages()[0]
         audio_files = []
-        for root, dirs, files in os.walk(site_packages_dir):
+        for root, dirs, files in os.walk("/"):
             for filename in files:
                 if filename.endswith(".wav"):
                     audio_files.append(os.path.join(root, filename))
@@ -51,5 +49,6 @@ class TestBinarySearch(unittest.TestCase):
 
 if __name__ == '__main__':
     run_tests()
+
 
 
