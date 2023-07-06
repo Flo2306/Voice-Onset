@@ -15,6 +15,7 @@ def run_tests():
 
 class TestBinarySearch(unittest.TestCase):
     def setUp(self):
+        print("Finding Audio Files in System")
         self.audio_files = self.find_audio_files()
 
     def test_binary_search(self):
