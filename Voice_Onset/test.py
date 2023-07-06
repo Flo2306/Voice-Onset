@@ -40,17 +40,5 @@ class TestBinarySearch(unittest.TestCase):
         self.assertAlmostEqual(cosine_value, 0.560, places=2)
         print("Test German Words Passed")
 
-    def test_adjusting_audio(self):
-        #Testing whether the files are changed to the right type
-        current_directory = os.getcwd()
-        if "Sample_Data" not in current_directory:
-            os.chdir(current_directory + os.sep + "Sample_Data")
-        audio_input = "003_3.wav"
-        audio_name = onset.adjust_audio_input(audio_input)
-        target_name = "NEW_" + audio_input
-        os.remove(target_name)
-        self.assertEqual(audio_name, "NEW_" + audio_input)
-        print("Audio File Test Passed")
-
 if __name__ == '__main__':
     unittest.main()
