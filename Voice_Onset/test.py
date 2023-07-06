@@ -40,13 +40,13 @@ class TestBinarySearch(unittest.TestCase):
         for root, dirs, files in os.walk("/"):
             for filename in files:
                 if filename.endswith(".wav"):
-                    audio_files.append(os.path.join(root, filename))
+                    audio_files.append((root, filename))
         return audio_files
 
-    def get_audio_path(self, filename):
-        for audio_file in self.audio_files:
-            if os.path.basename(audio_file) == filename:
-                return audio_file
+    def get_audio_directory(self, filename):
+        for audio_directory, audio_filename in self.audio_files:
+            if audio_filename == filename:
+                return audio_directory
         raise FileNotFoundError(f"File '{filename}' not found.")
 
 if __name__ == '__main__':
