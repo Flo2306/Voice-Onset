@@ -12,15 +12,17 @@ def run_tests():
 
     # Run the test suite
     unittest.TextTestRunner().run(suite)
+    print("\nAll Tests Passed")
 
 class TestBinarySearch(unittest.TestCase):
+
     def setUp(self):
         self.audio_files = self.find_audio_files()
 
     def test_binary_search(self):
         # Test with English audio file and target word "hello"
         audio_path = self.get_audio_directory("001_1.wav")
-        audio_file = "001.1.wav"
+        audio_file = '001_1.wav'
         os.chdir(audio_path)
         language_used = "en-US"
         target_word = "hello"
@@ -28,11 +30,28 @@ class TestBinarySearch(unittest.TestCase):
         self.assertAlmostEqual(float(onset_value_found), 0.6498, places=2)
         print("Test English Audio File passed")
 
+        audio_input = "002_1.wav"
+        language_used = "de-DE"
+        target_word = "hallo"
+        found_word, onset_value_found = onset.binary_search(audio_input, language_used, target_word, decision_value= 0)
+        self.assertAlmostEqual(float(onset_value_found), 1.021, places=2)
+        print("Test German Audio File passed")
+
     def test_cosine_similarity(self):
-        # Compare similar words
+        #Compare similar words
         cosine_value = onset.word_distance_caluclated("Bird", "Bird", "all-mpnet-base-v2")
         self.assertAlmostEqual(cosine_value, 1, places=2)
         print("Test Similar Words Passed")
+
+        #Compare different words
+        cosine_value = onset.word_distance_caluclated("Bird", "House", "all-mpnet-base-v2")
+        self.assertAlmostEqual(cosine_value, 0.279, places=2)
+        print("Test Different Words Passed")
+
+        #Compare German Words 
+        cosine_value = onset.word_distance_caluclated("Vogel", "Fisch", "distiluse-base-multilingual-cased-v2")
+        self.assertAlmostEqual(cosine_value, 0.560, places=2)
+        print("Test German Words Passed")
 
     def find_audio_files(self):
         audio_files = []
@@ -50,6 +69,3 @@ class TestBinarySearch(unittest.TestCase):
 
 if __name__ == '__main__':
     run_tests()
-
-
-
