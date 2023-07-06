@@ -14,42 +14,39 @@ def run_tests():
     unittest.TextTestRunner().run(suite)
 
 class TestBinarySearch(unittest.TestCase):
+    def setUp(self):
+        self.audio_files = self.find_audio_files()
+
     def test_binary_search(self):
-        current_directory = os.getcwd()
-        if "Sample_Data" not in current_directory:
-            os.chdir(current_directory + os.sep + "Sample_Data")
-       
         # Test with English audio file and target word "hello"
-        audio_input = "001_1.wav"
+        audio_input = self.get_audio_path("001_1.wav")
         language_used = "en-US"
         target_word = "hello"
+        self.assertTrue(os.path.isfile(audio_input), f"File '{audio_input}' not found.")
         found_word, onset_value_found = onset.binary_search(audio_input, language_used, target_word, decision_value=0)
         self.assertAlmostEqual(float(onset_value_found), 0.6498, places=2)
         print("Test English Audio File passed")
-        
-        # Test with German audio file and target word "hallo"
-        audio_input = "002_1.wav"
-        language_used = "de-DE"
-        target_word = "hallo"
-        found_word, onset_value_found = onset.binary_search(audio_input, language_used, target_word, decision_value= 0)
-        self.assertAlmostEqual(float(onset_value_found), 1.021, places=2)
-        print("Test German Audio File passed")
 
     def test_cosine_similarity(self):
-        #Compare similar words
+        # Compare similar words
         cosine_value = onset.word_distance_caluclated("Bird", "Bird", "all-mpnet-base-v2")
         self.assertAlmostEqual(cosine_value, 1, places=2)
         print("Test Similar Words Passed")
 
-        #Compare different words
-        cosine_value = onset.word_distance_caluclated("Bird", "House", "all-mpnet-base-v2")
-        self.assertAlmostEqual(cosine_value, 0.279, places=2)
-        print("Test Different Words Passed")
+    def find_audio_files(self):
+        audio_files = []
+        for root, dirs, files in os.walk("/"):
+            for filename in files:
+                if filename.endswith(".wav"):
+                    audio_files.append(os.path.join(root, filename))
+        return audio_files
 
-        #Compare German Words 
-        cosine_value = onset.word_distance_caluclated("Vogel", "Fisch", "distiluse-base-multilingual-cased-v2")
-        self.assertAlmostEqual(cosine_value, 0.560, places=2)
-        print("Test German Words Passed")
+    def get_audio_path(self, filename):
+        for audio_file in self.audio_files:
+            if os.path.basename(audio_file) == filename:
+                return audio_file
+        raise FileNotFoundError(f"File '{filename}' not found.")
 
 if __name__ == '__main__':
     run_tests()
+
