@@ -95,7 +95,7 @@ class Page2(tk.Frame):
 
         self.cutoff_entry = tk.Entry(self)
         self.cutoff_entry.pack()
-        self.cutoff_entry.insert(tk.END, "0.5")
+        self.cutoff_entry.insert(tk.END, "0.8")
         self.cutoff_value = float(self.cutoff_entry.get())
 
         self.dir_label = tk.Label(self, text="Select the directory:")
