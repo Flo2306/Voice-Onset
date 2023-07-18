@@ -7,7 +7,8 @@ setup(name='Voice_Onset',
       author='Florian Burger',
       author_email='flo.burger@sydney.edu.au',
       license='MIT',
-      packages=['Voice_Onset'], 
+      packages=['Voice_Onset'],
+      package_data = {'Voice_Onset': ['Sample_Experiment/*']}
       install_requires=[
         'SpeechRecognition',
         'pandas',
