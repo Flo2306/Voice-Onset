@@ -17,6 +17,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 from scipy.io.wavfile import read, write
 import numpy as np
+import time
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
@@ -109,6 +110,7 @@ def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-ba
         onset_value_found = list_of_intervals[0]
         onset_value_found1 = onset_value_found.item()
         #Removing the newly created audio file
+        time.sleep(1)
         os.remove(audio_input)
         #Return the best word found instead of the target word?
         if onset_value_found1 < onset + 0.01:
