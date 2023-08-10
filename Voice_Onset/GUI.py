@@ -188,7 +188,7 @@ class Page3(tk.Frame):
             self.used_file.pack()
             
         else:
-            self.csv_location = tk.Label(self, text="Name of final file: Onset_times.csv, Location: " + self.base_directory)
+            self.csv_location = tk.Label(self, text="Name of final file: Onset_times.csv, Location: Same as Used Folder Directory")
             self.csv_location.pack()
             
         self.finish_button = tk.Button(self, text="Finish", command=self.destroy)
