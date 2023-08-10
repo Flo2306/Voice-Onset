@@ -182,8 +182,6 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                 best_word = words_found[0]
                 print(best_word)
                 
-              
-
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
             #Moves the time frame up (e.g. from 2.5s to 3.75s)
