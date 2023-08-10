@@ -179,27 +179,10 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                     return best_word, 0
                 
             else:
-                # Extract the list of alternatives from the dictionary
-                alternatives = text.get('alternative', [])
-                if alternatives:
-                    # Find the dictionary with the highest confidence
-                    highest_confidence_dict = max(alternatives, key=lambda x: x.get('confidence', 0))
-                    
-                    # Get the transcript (word) with the highest confidence
-                    best_word = highest_confidence_dict.get('transcript', '')
-                    confidence = highest_confidence_dict.get('confidence', 0)
-                    
-                    if best_word:
-                        if confidence >= 0.6:
-                            message = "Confident: "
-                        else:
-                            message = "Not confident: "
-                        
-                        # Process the best_word with confidence message
-                        print(message + best_word)
-                else:
-                    print("No alternatives found.")
-                    best_word = "INVALID"
+                best_word = words_found[0]
+                print(best_word)
+                
+              
 
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
