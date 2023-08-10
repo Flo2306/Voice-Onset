@@ -148,9 +148,10 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
 
         #Used for set up of the model. 
         if run_already == 0:
+            words_found = word_recognizer(audio_input, language = language_used)
+            print(words_found)
             if target_word:
                 #Finding the potential words in the audio input
-                words_found = word_recognizer(audio_input, language = language_used)
                 cosine_similarity_list = []
                 #Calculating the cosine values for each word in the output
                 for word in words_found:
