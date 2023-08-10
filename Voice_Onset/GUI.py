@@ -279,6 +279,10 @@ class Page3(tk.Frame):
             csv_file_parent = path_to_csv_file.parent
             os.chdir(csv_file_parent)
             df_new.to_csv("Onset_times.csv")
+            
+        else: 
+            df_new.to_csv("Onset_times.csv")
+            
 
         return self.keys, self.file_dict
 app = GUI()
