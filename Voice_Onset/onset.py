@@ -149,7 +149,6 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         #Used for set up of the model. 
         if run_already == 0:
             words_found = word_recognizer(audio_input, language = language_used)
-            print(words_found)
             if target_word:
                 #Finding the potential words in the audio input
                 cosine_similarity_list = []
@@ -184,7 +183,6 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                 #Picking the word with the highest confidence is not difficult as we can use list comprehension due to the way 
                 #the word_recognizer function works
                 best_word = words_found[0]
-                print(best_word)
                 
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
@@ -253,7 +251,7 @@ def finding_appropriate_value(model):
         word_2 = input("Please enter the second word: ")
         #Calculating the cosine distance between both words
         final_value = word_distance_caluclated(word_1, word_2, model)
-        print("The similariy value is: ", final_value)
+        
         #Asking for another iteration
         done_yet = input("Do you want to try another word combination? Enter y/n: ")
         #Asking if they want to continue
