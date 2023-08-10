@@ -182,7 +182,13 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
             else:
                 #Picking the word with the highest confidence is not difficult as we can use list comprehension due to the way 
                 #the word_recognizer function works
-                best_word = words_found[0]
+                try:
+                    best_word = words_found[0]
+                except:
+                    os.remove(audio_input)
+                    #This is where the message is returned that the response was too different from the original word/target
+                    return "INVALID, 0
+                    
                 
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
