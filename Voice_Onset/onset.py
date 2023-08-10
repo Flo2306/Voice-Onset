@@ -20,7 +20,7 @@ import numpy as np
 import time
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
+def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
     """Function using binary search in combination wih transcripion to estimate word onset.
 
     This function can estimate the onset time of a audio file by repeately splitting the file 
@@ -146,38 +146,60 @@ def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-ba
         
         text_str = str(text)
 
-        print(text_str)
-        
         #Used for set up of the model. 
         if run_already == 0:
-            #Finding the potential words in the audio input
-            words_found = word_recognizer(audio_input, language = language_used)
-            cosine_similarity_list = []
-            #Calculating the cosine values for each word in the output
-            for word in words_found:
-                #In rare occasions, the transcription returned ints or floats which is 
-                #why we skip over all values that are not strings
-                if type(word) != str:
-                    words_found.remove(word)
-                    continue
-                correct_value = word_distance_caluclated(target_word, word, model_name = model)
-                #Appending the values to the list 
-                cosine_similarity_list.append(correct_value)
+            if target_word:
+                #Finding the potential words in the audio input
+                words_found = word_recognizer(audio_input, language = language_used)
+                cosine_similarity_list = []
+                #Calculating the cosine values for each word in the output
+                for word in words_found:
+                    #In rare occasions, the transcription returned ints or floats which is 
+                    #why we skip over all values that are not strings
+                    if type(word) != str:
+                        words_found.remove(word)
+                        continue
+                    correct_value = word_distance_caluclated(target_word, word, model_name = model)
+                    #Appending the values to the list 
+                    cosine_similarity_list.append(correct_value)
 
-            #Selecting the best cosine value found (assuming it is the best match within all responses). 
-            best_cosine_value = max(cosine_similarity_list, default=0)
-            if best_cosine_value > 0: 
-                index_for_word = cosine_similarity_list.index(max(cosine_similarity_list))
-                best_word = words_found[index_for_word]
-            else: 
-                best_word = "INVALID"
-            
-            #Checking if the best value we found is higher than the decision value, otherwise the loop continues
-            if best_cosine_value < decision_value:
-                os.remove(audio_input)
-                #This is where the message is returned that the response was too different from the original word/target
-                return best_word, 0
-        
+                #Selecting the best cosine value found (assuming it is the best match within all responses). 
+                best_cosine_value = max(cosine_similarity_list, default=0)
+                if best_cosine_value > 0: 
+                    index_for_word = cosine_similarity_list.index(max(cosine_similarity_list))
+                    best_word = words_found[index_for_word]
+                else: 
+                    best_word = "INVALID"
+                
+                #Checking if the best value we found is higher than the decision value, otherwise the loop continues
+                if best_cosine_value < decision_value:
+                    os.remove(audio_input)
+                    #This is where the message is returned that the response was too different from the original word/target
+                    return best_word, 0
+                
+            else:
+                # Extract the list of alternatives from the dictionary
+                alternatives = text.get('alternative', [])
+                if alternatives:
+                    # Find the dictionary with the highest confidence
+                    highest_confidence_dict = max(alternatives, key=lambda x: x.get('confidence', 0))
+                    
+                    # Get the transcript (word) with the highest confidence
+                    best_word = highest_confidence_dict.get('transcript', '')
+                    confidence = highest_confidence_dict.get('confidence', 0)
+                    
+                    if best_word:
+                        if confidence >= 0.6:
+                            message = "Confident: "
+                        else:
+                            message = "Not confident: "
+                        
+                        # Process the best_word with confidence message
+                        print(message + best_word)
+                else:
+                    print("No alternatives found.")
+                    best_word = "INVALID"
+
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
             #Moves the time frame up (e.g. from 2.5s to 3.75s)
