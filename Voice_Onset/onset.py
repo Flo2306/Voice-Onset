@@ -187,7 +187,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                 except:
                     os.remove(audio_input)
                     #This is where the message is returned that the response was too different from the original word/target
-                    return "INVALID, 0
+                    return "INVALID", 0
                     
                 
         #This checks whether the best word we found is in the audio file and then runs the recursion
