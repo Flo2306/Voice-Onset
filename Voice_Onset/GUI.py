@@ -212,7 +212,9 @@ class Page3(tk.Frame):
 
     def start_processing(self):
         self.used_directory.config(text="Used Folder Directory: " + self.base_directory)
-        self.used_file.config(text="Used CSV File: " + os.path.basename(self.file_path) + "\nOutput file will be in the same location as the CSV file: Onset_times.csv")
+
+        if self.file_path:
+            self.used_file.config(text="Used CSV File: " + os.path.basename(self.file_path) + "\nOutput file will be in the same location as the CSV file: Onset_times.csv")
 
         os.chdir(self.base_directory)
 
