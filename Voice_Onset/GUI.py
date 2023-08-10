@@ -32,7 +32,7 @@ class GUI(tk.Tk):
         close_button = tk.Button(self, text="Close everything", command=close_gui)
         close_button.pack()
 
-   def on_confirm(self):
+    def on_confirm(self):
         if self.page2.df is None:
             # No CSV file selected, handle accordingly
             self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
