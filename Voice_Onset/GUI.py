@@ -32,10 +32,18 @@ class GUI(tk.Tk):
         close_button = tk.Button(self, text="Close everything", command=close_gui)
         close_button.pack()
 
-    def on_confirm(self):
-        self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
-                           self.page2.file_path, self.page2.df, self.page2.cutoff_value,
-                           self.page1.model_combo.get())
+   def on_confirm(self):
+        if self.page2.df is None:
+            # No CSV file selected, handle accordingly
+            self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
+                               self.page2.file_path, None, self.page2.cutoff_value,
+                               self.page1.model_combo.get())
+        else:
+            # CSV file selected, proceed as before
+            self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
+                               self.page2.file_path, self.page2.df, self.page2.cutoff_value,
+                               self.page1.model_combo.get())
+            
         self.notebook.add(self.page3, text="Page 3")
         self.notebook.select(self.page3)
 
@@ -107,7 +115,7 @@ class Page2(tk.Frame):
         self.selected_dir = tk.Label(self)
         self.selected_dir.pack()
 
-        self.file_label = tk.Label(self, text="Select the CSV file:")
+        self.file_label = tk.Label(self, text="Select the CSV file (optional):")
         self.file_label.pack()
 
         self.file_button = tk.Button(self, text="Browse...", command=self.open_csv)
@@ -132,12 +140,13 @@ class Page2(tk.Frame):
 
     def open_csv(self):
         file_path = filedialog.askopenfilename(filetypes=[('CSV Files', '*.csv')])
-        self.selected_file.config(text=file_path)
-        self.file_path = file_path
-
-        # If the user selected a file, open it as a pandas dataframe
-        df_series = pd.read_csv(file_path)
-        self.df = pd.DataFrame(df_series)
+        if file_path:
+            self.selected_file.config(text=file_path)
+            self.file_path = file_path
+    
+            # If the user selected a file, open it as a pandas dataframe
+            df_series = pd.read_csv(file_path)
+            self.df = pd.DataFrame(df_series)
 
     def confirm(self):
         text_input = self.input_entry.get()
@@ -232,10 +241,15 @@ class Page3(tk.Frame):
             self.update_progress(iteration)
             self.count_label.config(text="Iteration count: {}".format(iteration + 1))
 
-            # Binary search
             target_language = self.language
-            target_word = self.df[self.df["File_name"] == name_of_audio]["Target"].values[0]
-            outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value = self.cut_off_value, model = self.model_name)
+
+            if self.df is not None:
+                # CSV file selected, proceed as before
+                target_word = self.df[self.df["File_name"] == name_of_audio]["Target"].values[0]
+                outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name)
+            else:
+                # No CSV file selected, handle accordingly (you can decide what to do in this case)
+                outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
 
             self.list_of_words.append(outcome_word)
             self.list_of_outcome_values.append(outcome_value)
@@ -253,13 +267,13 @@ class Page3(tk.Frame):
 
         df_new = pd.DataFrame(list(zip(self.list_of_words, self.list_of_outcome_values, self.list_of_file_names)), columns=["Said_word", "Onset_times", "File_name"])
         print(df_new)
-        path_to_csv_file = Path(self.file_path)
-        csv_file_parent = path_to_csv_file.parent
-        os.chdir(csv_file_parent)
-        df_new.to_csv("Onset_times.csv")
+        if self.df is not None:
+            path_to_csv_file = Path(self.file_path)
+            csv_file_parent = path_to_csv_file.parent
+            os.chdir(csv_file_parent)
+            df_new.to_csv("Onset_times.csv")
 
         return self.keys, self.file_dict
-
 app = GUI()
 app.mainloop()
 app.after(300000)
