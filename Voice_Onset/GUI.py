@@ -283,8 +283,8 @@ class Page3(tk.Frame):
         else: 
             df_new.to_csv("Onset_times.csv")
             
-
         return self.keys, self.file_dict
+        
 app = GUI()
 app.mainloop()
 app.after(300000)
