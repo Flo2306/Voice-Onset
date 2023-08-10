@@ -145,6 +145,9 @@ def binary_search(audio_input, language_used, target_word, model = 'all-mpnet-ba
             #text = r.recognize_sphinx(audio_data, language=language_used, show_all = True)
         
         text_str = str(text)
+
+        print(text_str)
+        
         #Used for set up of the model. 
         if run_already == 0:
             #Finding the potential words in the audio input
