@@ -177,8 +177,12 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                     os.remove(audio_input)
                     #This is where the message is returned that the response was too different from the original word/target
                     return best_word, 0
-                
+                    
+            #If there is no target word, the word found in the audio with the highest confidence is picked as the target word and 
+            #then used for further analysis
             else:
+                #Picking the word with the highest confidence is not difficult as we can use list comprehension due to the way 
+                #the word_recognizer function works
                 best_word = words_found[0]
                 print(best_word)
                 
