@@ -231,8 +231,11 @@ class Page3(tk.Frame):
 
         for iteration, file in enumerate(files_list):
             if file.startswith("NEW"):
-                os.remove(file)
-                continue
+                try:
+                    os.remove(file)
+                    continue
+                except: 
+                    continue
 
             useable_path_format = Path(os.getcwd() + os.sep + file)
             to_use_directory = useable_path_format.parent
