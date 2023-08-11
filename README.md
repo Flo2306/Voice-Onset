@@ -25,4 +25,4 @@ For Mac users, you need to install a program needed to deal with FLAC files as i
 
 The current members of this module are:
 
-Florian Burger, [flo.burger@sydney.edu.au](mailto:flo.burger@sydney.edu.au)
+Florian Burger, [f.burger@uva.nl](mailto:f.burger@uva.nl)
