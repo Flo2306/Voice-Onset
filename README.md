@@ -26,7 +26,7 @@ Potential future functions could expand to keyword search in audio recordings as
 For Mac users, you need to install a program needed to deal with FLAC files as it is part of the necessary modules. You can do so by first installing brew if you do not have it, more information under https://brew.sh. Next, you need to install the program to deal with the FLAC files using brew install flac in your terminal. 
 
 ## Connection reset by peer 
-This issue is related to the connection to google transcribe and a potential overload/overuse of their connect. As of now, I have not found a good solution for this issue to continue analysing the data continously. If you are using the GUI, you will have to select the datafolder again. There will be an additional CSV file in the datafolder telling showing the current process for each datafile. If this file is deleted, the program will start from the beginning. If you find a solution for this, feel free to contact me. 
+This issue is related to the connection to google transcribe and a potential overload/overuse of their connect. As of now, I have not found a good solution for this issue to continue analysing the data automatically. If you are using the GUI, you will have to select the datafolder again. There will be an additional CSV file in the datafolder telling showing the current process for each datafile. If this file is deleted, the program will start from the beginning. In the code of the GUI, I started some code that I believe to be promising but I could not figure it out completely myself. If you find a solution for this, feel free to contact me. 
 
 The current members of this module are:
 
