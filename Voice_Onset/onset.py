@@ -138,9 +138,6 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         
         #Makes it slower but increases accuracy as it uses another method of transcribing audio
         
-        if len(text) == 0: 
-            text = r.recognize_sphinx(audio_data, language=language_used, show_all = True)
-        
         text_str = str(text)
 
         #Used for set up of the model. 
