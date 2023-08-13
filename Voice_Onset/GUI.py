@@ -204,7 +204,7 @@ class Page3(tk.Frame):
         self.progress['value'] = value
         self.update_idletasks()
 
-        remaining_iterations = len(self.keys) - value
+        #remaining_iterations = len(self.keys) - value
         remaining_time = self.estimate_remaining_time(value, len(self.keys), self.start_time)
         self.count_label.config(text="Iteration count: {}".format(value))
         self.time_label.config(text="Time left: {} minutes".format(remaining_time))
@@ -233,67 +233,105 @@ class Page3(tk.Frame):
 
         self.start_time = time.time()
 
-        for iteration, file in enumerate(files_list):
-            if file.startswith("NEW"):
-                try:
-                    os.remove(file)
-                    continue
-                except: 
-                    continue
+        restart_attempts = 0
+        max_restart_attempts = 10
 
-            useable_path_format = Path(os.getcwd() + os.sep + file)
-            to_use_directory = useable_path_format.parent
-            name_of_audio = useable_path_format.name
+        try:
+            self.df_current = pd.read_csv('current_status.csv')
+            restart_attempts = self.df_current.at[self.df_current.index[-1], 'RestartAttempts']
 
-            self.file_dict[name_of_audio] = to_use_directory
-            self.keys = list(self.file_dict.keys())
-
-            self.update_progress(iteration)
-            self.count_label.config(text="Iteration count: {}".format(iteration + 1))
-
-            target_language = self.language
-
-            if self.df is not None:
-                # CSV file selected, proceed as before
-                matching_rows = self.df[self.df["File_name"] == name_of_audio]
-                if not matching_rows.empty:
-                    target_word = matching_rows["Target"].values[0]
-                    target_language = self.df[self.df["File_name"] == name_of_audio]["Language"].values[0]
-                    outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name)
-                else:
-                    outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
-                    outcome_word = "File not found in CSV file"  
-            else:
-                # No CSV file selected, handle accordingly (you can decide what to do in this case)
-                outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
-
-            self.list_of_words.append(outcome_word)
-            self.list_of_outcome_values.append(outcome_value)
-            self.list_of_file_names.append(name_of_audio)
-
-            # Update the GUI window
-            remaining_iterations = len(self.keys) - (iteration)
-            remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_time)
-            self.count_label.config(text="Iteration count: {}".format(iteration + 1))
-            self.time_label.config(text="Time left: {} minutes".format(remaining_time))
-
-            # Update the GUI window (if needed)
-            self.update()
-            self.after(100)
-
-        df_new = pd.DataFrame(list(zip(self.list_of_words, self.list_of_outcome_values, self.list_of_file_names)), columns=["Said_word", "Onset_times", "File_name"])
-        print(df_new)
-        if self.df is not None:
-            path_to_csv_file = Path(self.file_path)
-            csv_file_parent = path_to_csv_file.parent
-            os.chdir(csv_file_parent)
-            df_new.to_csv("Onset_times.csv")
-            
-        else: 
-            df_new.to_csv("Onset_times.csv")
-            
-        return self.keys, self.file_dict
+        except FileNotFoundError:
+            columns = ['OnsetTime', 'SaidWord', 'FileName', 'TargetWord', 'RestartAttempts']
+            self.df_current = pd.DataFrame(columns=columns)
         
+        while restart_attempts < max_restart_attempts:
+            try:
+                for iteration, file in enumerate(files_list):
+                    if file.startswith("NEW"):
+                        try:
+                            os.remove(file)
+                            continue
+                        except: 
+                            continue
+
+                    if not self.df_current.empty:
+                        self.df_current = pd.read_csv('current_status.csv')
+
+                    if file in self.df_current['FileName'].values:
+                        continue
+
+                    useable_path_format = Path(os.getcwd() + os.sep + file)
+                    to_use_directory = useable_path_format.parent
+                    name_of_audio = useable_path_format.name
+
+                    self.file_dict[name_of_audio] = to_use_directory
+                    self.keys = list(self.file_dict.keys())
+
+                    self.update_progress(iteration)
+                    self.count_label.config(text="Iteration count: {}".format(iteration + 1))
+
+                    target_language = self.language
+
+                    if self.df is not None:
+                        # CSV file selected, proceed as before
+                        matching_rows = self.df[self.df["File_name"] == name_of_audio]
+                        if not matching_rows.empty:
+                            target_word = matching_rows["Target"].values[0]
+                            target_language = self.df[self.df["File_name"] == name_of_audio]["Language"].values[0]
+                            outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name)
+                        else:
+                            outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
+                            outcome_word = "File not found in CSV file"  
+                    else:
+                        # No CSV file selected, handle accordingly (you can decide what to do in this case)
+                        outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
+
+                    new_row = {'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'FileName': file, 'TargetWord': target_word, 'RestartAttempts': restart_attempts} 
+
+                    new_row_df = pd.DataFrame(new_row, index=[0])
+
+                    self.df_current = pd.concat([self.df_current, new_row_df], ignore_index=True)
+
+                    self.df_current.to_csv('current_status.csv', index=False) 
+
+                    # Update the GUI window
+                    remaining_iterations = len(self.keys) - (iteration)
+                    remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_time)
+                    self.count_label.config(text="Iteration count: {}".format(iteration + 1))
+                    self.time_label.config(text="Time left: {} minutes".format(remaining_time))
+
+                    # Update the GUI window (if needed)
+                    self.update()
+                    self.after(100)
+
+                if self.df is not None:
+                    path_to_csv_file = Path(self.file_path)
+                    csv_file_parent = path_to_csv_file.parent
+                    os.chdir(csv_file_parent)
+                    self.df_current.to_csv("Onset_times.csv")
+
+                else: 
+                    self.df.to_csv("Onset_times.csv")
+                    
+                return self.keys, self.file_dict
+            
+            except ConnectionResetError as e:
+
+                restart_attempts += 1
+                new_row = {'OnsetTime': None, 'SaidWord': None, 'FileName': None, 'TargetWord': None, 'RestartAttempts': restart_attempts}
+                new_row_df = pd.DataFrame(new_row, index=[0])
+
+                # Concatenate the new row DataFrame with the main DataFrame
+                self.df_current = pd.concat([self.df_current, new_row_df], ignore_index=True)
+
+                self.df_current.to_csv('current_status.csv', index=False) 
+
+                if restart_attempts == max_restart_attempts:
+                    print("Max restart attempts reached. Exiting.")
+                    break
+
+                os.execv(sys.executable, ['python'] + sys.argv)
+      
 app = GUI()
 app.mainloop()
 app.after(300000)
