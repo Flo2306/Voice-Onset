@@ -311,7 +311,7 @@ class Page3(tk.Frame):
                     self.df_current.to_csv("Onset_times.csv")
 
                 else: 
-                    self.df.to_csv("Onset_times.csv")
+                    self.df_current.to_csv("Onset_times.csv")
                     
                 return self.keys, self.file_dict
             
