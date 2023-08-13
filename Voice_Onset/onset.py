@@ -135,14 +135,11 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         # recognize (convert from speech to text)
         text = r.recognize_google(audio_data, language=language_used, show_all = True)
 
-        #This may make the algorithm slower but it should increase accuracy a bit if I could 
-        #get it running but it does not work right now
-        #if len(text) == 0: 
-            #Work around for issue that I could not yet solve. 
-            #Issue: 
-            #File "_pocketsphinx.pyx", line 960, in _pocketsphinx.Decoder.process_raw
-            #IndexError: Out of bounds on buffer access (axis 0)
-            #text = r.recognize_sphinx(audio_data, language=language_used, show_all = True)
+        
+        #Makes it slower but increases accuracy as it uses another method of transcribing audio
+        
+        if len(text) == 0: 
+            text = r.recognize_whisper(audio_data, language=language_used, show_all = True)
         
         text_str = str(text)
 
