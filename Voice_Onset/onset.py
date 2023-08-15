@@ -114,7 +114,6 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         while True:
             try:
                 print("Fuck")
-                del audio_input
                 os.remove(audio_input)
                 break
             except PermissionError:
