@@ -111,7 +111,13 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         onset_value_found = list_of_intervals[0]
         onset_value_found1 = onset_value_found.item()
         #Removing the newly created audio file
-        os.remove(audio_input)
+        while True:
+            try:
+                print("Fuck")
+                os.remove(audio_input)
+                break
+            except PermissionError:
+                time.sleep(1)
         #Return the best word found instead of the target word?
         if onset_value_found1 < onset + 0.01:
             return "Not working", onset_value_found1
