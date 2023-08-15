@@ -27,7 +27,7 @@ pip install git+https://github.com/Flo2306/Voice_Onset
 
 # Usage 
 
-You can either write your own code using my function or you can use the user interface (GUI). In case you want to write your own code, you can find an example of how to do this in the sample experiment. If you want to use the GUI, you can simply use these two lines: 
+You can either write your own code using my functions or you can use the user interface (GUI). In case you want to write your own code, you can find an example of how to do this in the sample experiment. If you want to use the GUI, you can simply use these two lines: 
 
 "
 
