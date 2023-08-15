@@ -25,19 +25,21 @@ affiliations:
    index: 1
  - name: University of Sydney, Australia
    index: 2
- - Date: 15 August 2023
+date: 15 August 2023
+---
 
 # Summary
-This Modul allows a automatic analysis of voice onset times and whether the response 
-was correct or not. Until now, most approaches use accoustic information from the audio 
-to find the correct onset. However, this approach can be inaccurate if participants use 
-filler words or cough before saying the word. Using a binary search approach in combination 
-with word recognition allows to not be limited by these issues as it will find the moment where 
-it can 'just' transcribe the word. In addition, it allows to automatically decide whether an 
-answer is correct or not using nlp models and cosine similarity. What exact value is used 
-can be decided individually but there is a tool implemented that can help decide what 
-threshold to use. 
+
+This module allows automatic analysis of voice onset times and whether the response 
+was correct or not. Unlike previous approaches that rely solely on acoustic information 
+from the audio to find the correct onset, this approach combines binary search with 
+word recognition. It overcomes issues caused by filler words or coughs before the word, 
+as it identifies the point where it can 'just' transcribe the word. Additionally, it 
+automatically determines answer correctness using NLP models and cosine similarity. 
+The exact threshold for correctness can be customized, and a built-in tool aids in 
+threshold selection.
 
 # Acknowledgements
 
-We acknowledge contributions from Niels O. Schiller, Bob Slevc and Michael Nunez. 
+We acknowledge contributions from Niels O. Schiller, Bob Slevc, and Michael Nunez.
+
