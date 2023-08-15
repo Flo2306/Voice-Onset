@@ -26,6 +26,7 @@ affiliations:
  - name: University of Sydney, Australia
    index: 2
 date: 15 August 2023
+---
 # Summary
 
 This module allows automatic analysis of voice onset times (when a person responds) in audio files and whether the response 
