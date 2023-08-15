@@ -106,12 +106,11 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
     mid_index = int((low + high)/2)
 
     #End of the recursion when there are maximum two items left in the list. 
-    if mid_index <= 1:
+    if high < 2:
         #Returning the appropriate value
         onset_value_found = list_of_intervals[0]
         onset_value_found1 = onset_value_found.item()
         #Removing the newly created audio file
-        close_related_processes(audio_input)
         os.remove(audio_input)
         #Return the best word found instead of the target word?
         if onset_value_found1 < onset + 0.01:
@@ -331,14 +330,3 @@ def word_recognizer(sound_file, language):
             return(list_for_output)
         except:
             return(list_for_output)
-
-def close_related_processes(file_path):
-    # Get a list of all processes that are currently using the file
-    processes = [p for p in psutil.process_iter() if file_path in p.open_files()]
-    
-    # Terminate each process
-    for process in processes:
-        try:
-            process.terminate()
-        except psutil.NoSuchProcess:
-            pass  # The process might have already terminated
