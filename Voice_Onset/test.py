@@ -30,7 +30,10 @@ class TestBinarySearch(unittest.TestCase):
         self.assertAlmostEqual(float(onset_value_found), 0.6498, places=2)
         print("Test English Audio File passed")
 
+        
+        audio_path = self.get_audio_directory("002_1.wav")
         audio_input = "002_1.wav"
+        os.chdir(audio_path)
         language_used = "de-DE"
         target_word = "hallo"
         found_word, onset_value_found = onset.binary_search(audio_input, language_used, target_word, decision_value= 0)
