@@ -6,19 +6,17 @@ tags:
   - Voice Onset
   - NLP
   - Word Recognition
-  - Voice Analysis
 authors:
   - name: Florian Burger
     orcid: 0000-0003-4745-5515
-    equal-contrib: true
-    affiliation: "1, 2"
+    corresponding: true
+    affiliation: "1, 2" 
+    email: f.burger@uva.nl
   - name: Denise Moerel
     orcid: 0000-0001-9677-0170
-    equal-contrib: false 
     affiliation: 2
   - name: Thomas A. Carlson
     orcid: 0000-0002-3953-4195
-    equal-contrib: false 
     affiliation: 2
 affiliations:
  - name: University of Amsterdam, The Netherlands
@@ -26,7 +24,9 @@ affiliations:
  - name: University of Sydney, Australia
    index: 2
 date: 15 August 2023
+bibliography: 
 ---
+
 # Summary
 
 This module allows automatic analysis of voice onset times (when a person responds) in audio files and whether the response 
@@ -65,4 +65,3 @@ of your experiment can influence the accuracy.
 We acknowledge contributions from Niels O. Schiller, Bob Slevc, and Michael Nunez.
 
 # References
-
