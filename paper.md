@@ -28,7 +28,7 @@ affiliations:
 date: 15 August 2023
 # Summary
 
-This module allows automatic analysis of voice onset times and whether the response 
+This module allows automatic analysis of voice onset times (when a person responds) in audio files and whether the response 
 was correct or not. 
 
 It finds the onset times of words by using a binary search implementation
