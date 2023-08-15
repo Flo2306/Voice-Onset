@@ -53,7 +53,7 @@ This issue is related to the connection to Google Transcribe and a potential ove
 
 We acknowledge contributions from Niels O. Schiller, Bob Slevc and Michael Nunez. 
 
-## Authors
+# Authors
 
 The current members of this module are:
 
