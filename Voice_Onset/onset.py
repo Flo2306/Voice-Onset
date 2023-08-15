@@ -1,12 +1,12 @@
 #Florian Burger 
 #08.02.2023
-#The code below allows you to transform audio recordings into text form and will give you approxiamte onset times 
+#The code below allows you to transform audio recordings into text form and will give you approximate onset times 
 
 #The most important thing for this algorithm is audio quality. If recording quality is poor, I recommend using a
 #different platform like Chronset 
 
 #Things to improve: 
-#Include second r.recognize class in code but will most likely require some api access set up? 
+#Include second r.recognize class in code but will most likely require some API access set up? 
 
 import speech_recognition as sr
 import pandas as pd
@@ -187,7 +187,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                     #This is where the message is returned that the response was too different from the original word/target
                     return "INVALID", 0
                     
-                
+        source.__exit__(None, None, None)    
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
             #Moves the time frame up (e.g. from 2.5s to 3.75s)
