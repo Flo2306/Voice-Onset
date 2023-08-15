@@ -28,6 +28,8 @@ For Mac users, you need to install a program needed to deal with FLAC files as i
 ## Connection reset by peer 
 This issue is related to the connection to google transcribe and a potential overload/overuse of their connect. As of now, I have not found a good solution for this issue to continue analysing the data automatically. If you are using the GUI, you will have to select the datafolder again. There will be an additional CSV file in the datafolder telling showing the current process for each datafile. If this file is deleted, the program will start from the beginning. In the code of the GUI, I started some code that I believe to be promising but I could not figure it out completely myself. If you find a solution for this, feel free to contact me. 
 
+## Authors
+
 The current members of this module are:
 
 Florian Burger, [f.burger@uva.nl](mailto:f.burger@uva.nl)
