@@ -31,3 +31,10 @@ This issue is related to the connection to google transcribe and a potential ove
 The current members of this module are:
 
 Florian Burger, [f.burger@uva.nl](mailto:f.burger@uva.nl)
+
+Denise Moerel, [denise.moerel@sydney.edu.au](mailto:denise.moerel@sydney.edu.au)
+
+Thomas A. Carlson, [thomas.carlson@sydney.edu.au](mailto:thomas.carlson@sydney.edu.au)
+
+In case you have any questions/feedback, please contact Florian Burger. 
+
