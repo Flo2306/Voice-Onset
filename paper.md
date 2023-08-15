@@ -25,7 +25,7 @@ affiliations:
    index: 1
  - name: University of Sydney, Australia
    index: 2
- - date: 15 August 2023
+ - Date: 15 August 2023
 
 # Summary
 This Modul allows a automatic analysis of voice onset times and whether the response 
