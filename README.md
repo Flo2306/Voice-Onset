@@ -11,7 +11,7 @@ Pro:
 Con:
 
 - The audio quality plays a big role in how many audio files are classified. Using a computer microphone, we lost about 15% of the data to the voice transcription not recognizing the correct word.
-- It can take quite some time as it is splitting the recording multiple times (a 5 second recording takes about 12 seconds to process, the algorithm has a complexity of log(n))
+- It can take quite some time as it is splitting the recording multiple times (a 5 second recording takes about 12 seconds to process on a MacbookAir 2020 with a M1 chip, the algorithm has a complexity of log(n))
 
 The idea for this project came about in a research internship at the University of Sydney. In the experiment, pictures were shown and participants had to name the object they saw. As I was unaware that there were other softwares available (e.g. Chronset), I decided to try and write my own function. I decided to use a binary search + transcribe approach which, to my knowledge, has not been used before this way. I am currently in the process of writing a paper about this and I hope to publish within this year.
 
