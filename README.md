@@ -25,6 +25,8 @@ To install this module, you can use the following code in your python terminal:
 
 pip install git+https://github.com/Flo2306/Voice_Onset
 
+Once this has been reviewed and accepted by JOSS, I will also make it available on PyPI
+
 # Usage 
 
 You can either write your own code using my functions or you can use the user interface (GUI). In case you want to write your own code, you can find an example of how to do this in the sample experiment. If you want to use the GUI, you can simply use these two lines: 
