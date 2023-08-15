@@ -18,6 +18,7 @@ setup(name='Voice_Onset',
         'scikit-learn',
         'sentence-transformers',
         'scipy',
+        'unipath',
         'numpy'
     ],
     classifiers=[
