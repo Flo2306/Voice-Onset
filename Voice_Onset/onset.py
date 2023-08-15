@@ -280,7 +280,14 @@ def adjust_audio_input(file_name):
     #Creating new name for file
     new_name = "NEW_" + str(file_name)
     #Adjusting the type of recording so sound recognition works 
-    soundfile.write(new_name, data, samplerate, subtype='PCM_16')
+
+    with soundfile.SoundFile(file_name, 'r') as f:
+        data = f.read()
+        samplerate = f.samplerate
+        
+        #Adjusting the type of recording so sound recognition works 
+        soundfile.write(new_name, data, samplerate, subtype='PCM_16')
+    
     return new_name
 
 def word_recognizer(sound_file, language):
