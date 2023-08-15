@@ -19,6 +19,22 @@ The use case I can think of the most is to use it in response time related exper
 
 Potential future functions could expand to keyword search in audio recordings as the approach should work for this kind too. Another potential expansion is to implement different ways of voice recognition which could improve the accuracy of the algorithm.
 
+# Installation
+
+To install this module, you can use the following code in your python terminal: 
+
+pip install git+https://github.com/Flo2306/Voice_Onset
+
+# Usage 
+
+You can either write your own code using my function or you can use the user interface (GUI). In case you want to write your own code, you can find an example of how to do this in the sample experiment. If you want to use the GUI, you can simply use these two lines: 
+
+from Voice_Onset import GUI
+
+GUI()
+
+The GUI should open now from which you can continue everything automatically yourself. 
+
 # Troubleshooting 
 
 ## Issue with FLAC
@@ -26,7 +42,8 @@ Potential future functions could expand to keyword search in audio recordings as
 For Mac users, you need to install a program needed to deal with FLAC files as it is part of the necessary modules. You can do so by first installing brew if you do not have it, more information under https://brew.sh. Next, you need to install the program to deal with the FLAC files using brew install flac in your terminal. 
 
 ## Connection reset by peer 
-This issue is related to the connection to google transcribe and a potential overload/overuse of their connect. As of now, I have not found a good solution for this issue to continue analysing the data automatically. If you are using the GUI, you will have to select the datafolder again. There will be an additional CSV file in the datafolder telling showing the current process for each datafile. If this file is deleted, the program will start from the beginning. In the code of the GUI, I started some code that I believe to be promising but I could not figure it out completely myself. If you find a solution for this, feel free to contact me. 
+
+This issue is related to the connection to Google Transcribe and a potential overload/overuse of their connection. As of now, I have not found a good solution for this issue to continue analysing the data automatically. If you are using the GUI, you will have to select the data folder again. There will be an additional CSV file in the data folder telling showing the current process for each data file. If this file is deleted, the program will start from the beginning. This issue usually occurs when you process many audio files (for me it happened after processing 4000 audio files) so I hope you do not have to restart it many times. 
 
 ## Authors
 
