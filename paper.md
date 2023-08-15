@@ -26,9 +26,7 @@ affiliations:
  - name: University of Sydney, Australia
    index: 2
 date: 15 August 2023
----
 
----
 title: 'Voice_Onset: Binary Search in Combination with Word Recognition to Find Voice Onset Times'
 tags:
   - Python
