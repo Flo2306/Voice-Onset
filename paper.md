@@ -26,34 +26,6 @@ affiliations:
  - name: University of Sydney, Australia
    index: 2
 date: 15 August 2023
-
-title: 'Voice_Onset: Binary Search in Combination with Word Recognition to Find Voice Onset Times'
-tags:
-  - Python
-  - Linguistics
-  - Voice Onset
-  - NLP
-  - Word Recognition
-  - Voice Analysis
-authors:
-  - name: Florian Burger
-    orcid: 0000-0003-4745-5515
-    equal-contrib: true
-    affiliation: "1, 2"
-  - name: Denise Moerel
-    orcid: 0000-0001-9677-0170
-    equal-contrib: false 
-    affiliation: 2
-  - name: Thomas A. Carlson
-    orcid: 0000-0002-3953-4195
-    equal-contrib: false 
-    affiliation: 2
-affiliations:
- - name: University of Amsterdam, The Netherlands
-   index: 1
- - name: University of Sydney, Australia
-   index: 2
-date: 15 August 2023
 ---
 # Summary
 
