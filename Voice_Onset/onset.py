@@ -18,6 +18,7 @@ from sentence_transformers import SentenceTransformer
 from scipy.io.wavfile import read, write
 import numpy as np
 import time
+import psutil
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
@@ -110,7 +111,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         onset_value_found = list_of_intervals[0]
         onset_value_found1 = onset_value_found.item()
         #Removing the newly created audio file
-        time.sleep(1)
+        close_related_processes(audio_input)
         os.remove(audio_input)
         #Return the best word found instead of the target word?
         if onset_value_found1 < onset + 0.01:
@@ -330,3 +331,14 @@ def word_recognizer(sound_file, language):
             return(list_for_output)
         except:
             return(list_for_output)
+
+def close_related_processes(file_path):
+    # Get a list of all processes that are currently using the file
+    processes = [p for p in psutil.process_iter() if file_path in p.open_files()]
+    
+    # Terminate each process
+    for process in processes:
+        try:
+            process.terminate()
+        except psutil.NoSuchProcess:
+            pass  # The process might have already terminated
