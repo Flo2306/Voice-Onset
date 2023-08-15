@@ -49,6 +49,10 @@ For Mac users, you need to install a program needed to deal with FLAC files as i
 
 This issue is related to the connection to Google Transcribe and a potential overload/overuse of their connection. As of now, I have not found a good solution for this issue to continue analysing the data automatically. If you are using the GUI, you will have to select the data folder again. There will be an additional CSV file in the data folder telling showing the current process for each data file. If this file is deleted, the program will start from the beginning. This issue usually occurs when you process many audio files (for me it happened after processing 4000 audio files) so I hope you do not have to restart it many times. 
 
+# Acknowledgements
+
+We acknowledge contributions from Niels O. Schiller, Bob Slevc and Michael Nunez. 
+
 ## Authors
 
 The current members of this module are:
