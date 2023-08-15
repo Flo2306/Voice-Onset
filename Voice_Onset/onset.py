@@ -113,7 +113,6 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         #Removing the newly created audio file
         while True:
             try:
-                print("Fuck")
                 os.remove(audio_input)
                 break
             except PermissionError:
