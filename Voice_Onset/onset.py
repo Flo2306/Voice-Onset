@@ -144,7 +144,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
 
     print("New Sound File Created")
 
-    os.wait(5)
+    time.sleep(5)
 
     #Setting up the recognizer
     r = sr.Recognizer()
