@@ -109,7 +109,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
     if high < 2:
         #Returning the appropriate value
         onset_value_found = list_of_intervals[0]
-        onset_value_found1 = onset_value_found.item()
+        onset_value_found1 = round(onset_value_found.item(), 3)
         
         #Removing the newly created audio file
         os.remove(audio_input)
