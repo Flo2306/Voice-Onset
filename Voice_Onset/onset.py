@@ -133,7 +133,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
     # Get the sample rate of the input audio
     audio_data, original_sample_rate = soundfile.read(audio_input)
 
-    mid_offset = int(mid_offset_seconds * original_sample_rate)
+    mid_offset = int(mid * original_sample_rate)
 
     print(mid_offset)
 
