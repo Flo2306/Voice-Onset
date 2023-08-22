@@ -335,7 +335,7 @@ class Page3(tk.Frame):
                         if not matching_rows.empty:
                             target_word = matching_rows["Target"].values[0]
                             target_language = self.df[self.df["File_name"] == name_of_audio]["Language"].values[0]
-                            outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name)
+                            outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name)
                         else:
                             outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
                             outcome_word = "File not found in CSV file"
@@ -344,7 +344,10 @@ class Page3(tk.Frame):
                         outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
 
                     # Create a new row for the current processing result
-                    new_row = {'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'FileName': file, 'TargetWord': target_word, 'RestartAttempts': restart_attempts}
+                    if correct_answer:
+                        new_row = {'FileName': file, 'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'TargetWord': target_word, 'CorrectAnswer': correct_answer, 'RestartAttempts': restart_attempts}
+                    else: 
+                        new_row = {'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'FileName': file, 'TargetWord': target_word, 'RestartAttempts': restart_attempts}
                     new_row_df = pd.DataFrame(new_row, index=[0])
 
                     # Concatenate the new row DataFrame with the main DataFrame
