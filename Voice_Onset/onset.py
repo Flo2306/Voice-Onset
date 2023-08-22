@@ -135,15 +135,11 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
 
     mid_offset = int(mid * original_sample_rate)
 
-    print(mid_offset)
+    print(mid)
 
     # Cut the audio file starting from the mid value
     output_audio_path = "cut_audio.wav"
     soundfile.write(output_audio_path, audio_data[mid_offset:], original_sample_rate)
-
-    print("New Sound File Created")
-
-    time.sleep(5)
 
     #Setting up the recognizer
     r = sr.Recognizer()
