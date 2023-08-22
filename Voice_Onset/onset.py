@@ -12,7 +12,7 @@ import speech_recognition as sr
 import pandas as pd
 import numpy as np
 import os
-import soundfile as sf
+import soundfile 
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 from scipy.io.wavfile import read, write
@@ -134,11 +134,11 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
     mid_offset = int(mid * 1000)  # Convert to milliseconds
 
     # Get the sample rate of the input audio
-    audio_data, original_sample_rate = sf.read(audio_input)
+    audio_data, original_sample_rate = soundfile.read(audio_input)
 
     # Cut the audio file starting from the mid value
     output_audio_path = "cut_audio.wav"
-    sf.write(output_audio_path, audio_data[mid_offset:], original_sample_rate)
+    soundfile.write(output_audio_path, audio_data[mid_offset:], original_sample_rate)
 
     #Setting up the recognizer
     r = sr.Recognizer()
