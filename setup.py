@@ -20,7 +20,7 @@ setup(
         'scipy',
         'unipath',
         'numpy',
-        'git+https://github.com/openai/whisper.git',
+        'openai-whisper',
         'soundfile'
     ],
     classifiers=[
