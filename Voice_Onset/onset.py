@@ -122,7 +122,7 @@ def binary_search(audio_input, language_used, target_word = None, correct_answer
         #Return the best word found instead of the target word
         if target_word:
             if onset_value_found1 < onset + 0.01:
-            return "Not working", onset_value_found1, correct_answer
+                return "Not working", onset_value_found1, correct_answer
         #Returns the best word found 
             else:
                 return best_word, onset_value_found1, correct_answer
