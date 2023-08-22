@@ -21,7 +21,7 @@ import time
 import psutil
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.0001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
+def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.01, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
     """Function using binary search in combination wih transcripion to estimate word onset.
 
     This function can estimate the onset time of a audio file by repeately splitting the file 
