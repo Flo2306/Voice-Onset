@@ -117,6 +117,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         
         #Removing the newly created audio file
         os.remove(audio_input)
+        os.remove("cut_audio.wav")
         
         #Return the best word found instead of the target word?
         if onset_value_found1 < onset + 0.01:
