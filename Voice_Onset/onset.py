@@ -147,7 +147,7 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         #Removes some noise from file
         r.adjust_for_ambient_noise(source, duration=onset)
         # listen for the data (load audio to memory)
-        audio_data = r.record(source, offset=mid)
+        audio_data = r.record(source)
         # recognize (convert from speech to text)
         text = r.recognize_google(audio_data, language=language_used, show_all = True)
 
