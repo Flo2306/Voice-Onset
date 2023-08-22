@@ -126,6 +126,8 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
     #middle value is 2.5, the second either 1.25 or 3.75 and so on. 
     mid = list_of_intervals[mid_index]
 
+    print(mid)
+
     #Setting up the recognizer
     r = sr.Recognizer()
     with sr.AudioFile(audio_input) as source:
