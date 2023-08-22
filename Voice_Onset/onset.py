@@ -21,7 +21,7 @@ import time
 import psutil
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = "", high_accuracy = False): 
+def binary_search(audio_input, language_used, target_word = None, correct_answer = True, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = "", high_accuracy = False): 
     """Function using binary search in combination wih transcripion to estimate word onset.
 
     This function can estimate the onset time of a audio file by repeately splitting the file 
@@ -119,13 +119,21 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         os.remove(audio_input)
         os.remove("cut_audio.wav")
         
-        #Return the best word found instead of the target word?
-        if onset_value_found1 < onset + 0.01:
-            return "Not working", onset_value_found1
+        #Return the best word found instead of the target word
+        if target_word:
+            if onset_value_found1 < onset + 0.01:
+            return "Not working", onset_value_found1, correct_answer
         #Returns the best word found 
-        else:
-            return best_word, onset_value_found1
-    
+            else:
+                return best_word, onset_value_found1, correct_answer
+
+        else: 
+            if onset_value_found1 < onset + 0.01:
+                return "Not working", onset_value_found1
+            #Returns the best word found 
+            else:
+                return best_word, onset_value_found1
+        
     #Defining the value that is in the middle of the increment list. 
     #An example would be that in a audio file of 5 seconds, the first 
     #middle value is 2.5, the second either 1.25 or 3.75 and so on. 
@@ -184,9 +192,8 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
                 
                 #Checking if the best value we found is higher than the decision value, otherwise the loop continues
                 if best_cosine_value < decision_value:
-                    os.remove(audio_input)
+                    correct_answer = False
                     #This is where the message is returned that the response was too different from the original word/target
-                    return best_word, 0
                     
             #If there is no target word, the word found in the audio with the highest confidence is picked as the target word and 
             #then used for further analysis
@@ -205,11 +212,11 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         if best_word in text_str: 
             #Moves the time frame up (e.g. from 2.5s to 3.75s)
             list_of_intervals1 = list_of_intervals[mid_index:high]
-            return binary_search(audio_input, language_used, target_word, list_needed = 1, list_of_increment_values = list_of_intervals1, run_already=1, words_found = words_found, best_word = best_word, adjustment_needed= 1)
+            return binary_search(audio_input, language_used, target_word, correct_answer = correct_answer, list_needed = 1, list_of_increment_values = list_of_intervals1, run_already=1, words_found = words_found, best_word = best_word, adjustment_needed= 1)
         else: 
             #Moves the time frame down (e.g. from 2.5 to 1.25)
             list_of_intervals1 = list_of_intervals[low:mid_index]
-            return binary_search(audio_input, language_used, target_word, list_needed = 1, list_of_increment_values = list_of_intervals1, run_already=1, words_found = words_found, best_word = best_word, adjustment_needed=1)
+            return binary_search(audio_input, language_used, target_word, correct_answer = correct_answer, list_needed = 1, list_of_increment_values = list_of_intervals1, run_already=1, words_found = words_found, best_word = best_word, adjustment_needed=1)
 
 def word_distance_caluclated(target_word, word_found, model_name):
     """Function calculating cosine similarity between target word and word found
