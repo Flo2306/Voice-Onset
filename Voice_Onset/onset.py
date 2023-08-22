@@ -130,13 +130,12 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
     #middle value is 2.5, the second either 1.25 or 3.75 and so on. 
     mid = list_of_intervals[mid_index]
 
-    print(mid)
-
-     # Calculate the mid value for the offset cut
-    mid_offset = int(mid * 1000)  # Convert to milliseconds
-
     # Get the sample rate of the input audio
     audio_data, original_sample_rate = soundfile.read(audio_input)
+
+    mid_offset = int(mid_offset_seconds * original_sample_rate)
+
+    print(mid_offset)
 
     # Cut the audio file starting from the mid value
     output_audio_path = "cut_audio.wav"
