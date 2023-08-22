@@ -21,7 +21,7 @@ import time
 import psutil
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = ""): 
+def binary_search(audio_input, language_used, target_word = None, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = "", high_accuracy = False): 
     """Function using binary search in combination wih transcripion to estimate word onset.
 
     This function can estimate the onset time of a audio file by repeately splitting the file 
@@ -69,6 +69,10 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         This list includes all the potential words found in the transcribt of the audio file. 
     best_word: string
         This is the word that has the best similarity value with the target word
+    high_accuracy: binary 
+        If this is set to true, the algorithm will consistently try a second approach (whisper) in case the first 
+        approach (google transcribe) does not find a word. This will make the algorithm a lot longer but it 
+        can be used to make sure that the results are double checked.
     
     Returns
     -------
@@ -140,7 +144,8 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         text = r.recognize_google(audio_data, language=language_used, show_all = True)
 
         if len(text) == 0:
-            text = r.recognize_whisper(audio_data)
+            if high_accuracy == True:
+                text = r.recognize_whisper(audio_data)
         
         text_str = str(text)
 
