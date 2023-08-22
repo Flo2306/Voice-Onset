@@ -136,6 +136,9 @@ def binary_search(audio_input, language_used, target_word = None, model = 'all-m
         audio_data = r.record(source, offset=mid)
         # recognize (convert from speech to text)
         text = r.recognize_google(audio_data, language=language_used, show_all = True)
+
+        if len(text) == 0:
+            text = r.recognize_whisper(audio_data, language=language_used, show_all = True)
         
         text_str = str(text)
 
