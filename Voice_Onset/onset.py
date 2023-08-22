@@ -12,7 +12,7 @@ import speech_recognition as sr
 import pandas as pd
 import numpy as np
 import os
-import soundfile
+import soundfile as sf
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 from scipy.io.wavfile import read, write
