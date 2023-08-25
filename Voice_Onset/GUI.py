@@ -305,9 +305,12 @@ class Page3(tk.Frame):
                         except:
                             continue
 
-                    file_directory = os.path.dirname(file)
+                    directory_name = os.path.dirname(file)
+                    
+                    file_directory = os.path.join(self.base_directory, directory_name)
                     print(file_directory)
                     os.chdir(file_directory)
+                    
 
                     # Read the current status if the DataFrame is not empty
                     if not self.df_current.empty:
