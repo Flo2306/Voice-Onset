@@ -296,6 +296,7 @@ class Page3(tk.Frame):
         while restart_attempts < max_restart_attempts:
             try:
                 # Iterate over each file in the list
+                iterations_this_time = 0
                 for iteration, file in enumerate(files_list):
                     if file.startswith("NEW"):
                         try:
@@ -319,6 +320,7 @@ class Page3(tk.Frame):
                     if file in self.df_current['FileName'].values:
                         continue
 
+                    iterations_this_time += 1
                     # Format the file path for processing
                     useable_path_format = Path(os.getcwd() + os.sep + file)
                     to_use_directory = useable_path_format.parent
@@ -364,7 +366,7 @@ class Page3(tk.Frame):
 
                     # Update the GUI window with the remaining iterations and time estimate
                     remaining_iterations = len(self.keys) - (iteration)
-                    remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_time)
+                    remaining_time = self.estimate_remaining_time(iterations_this_time, len(files_list), self.start_time)
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
                     self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
