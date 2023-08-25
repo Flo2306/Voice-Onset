@@ -314,7 +314,7 @@ class Page3(tk.Frame):
 
                     # Read the current status if the DataFrame is not empty
                     if not self.df_current.empty:
-                        self.df_current = pd.read_csv('current_status.csv')
+                        self.df_current = pd.read_csv(os.path.join(self.base_directory, 'current_status.csv'))
 
                     # Skip files that are already processed
                     if file in self.df_current['FileName'].values:
@@ -361,7 +361,7 @@ class Page3(tk.Frame):
                     self.df_current = pd.concat([self.df_current, new_row_df], ignore_index=True)
 
                     # Save the current status to a CSV file
-                    self.df_current.to_csv('current_status.csv', index=False)
+                    self.df_current.to_csv(os.path.join(self.base_directory, 'current_status.csv'), index=False)
 
                     # Update the GUI window with the remaining iterations and time estimate
                     remaining_iterations = len(self.keys) - (iteration)
