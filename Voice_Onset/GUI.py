@@ -305,6 +305,10 @@ class Page3(tk.Frame):
                         except:
                             continue
 
+                    file_directory = os.path.dirname(file)
+                    print(file_directory)
+                    os.chdir(file_directory)
+
                     # Read the current status if the DataFrame is not empty
                     if not self.df_current.empty:
                         self.df_current = pd.read_csv('current_status.csv')
