@@ -304,7 +304,6 @@ def adjust_audio_input(file_name):
     """
     #Reading the data
 
-    print(os.getcwd())
     data, samplerate = soundfile.read(file_name)
     #Creating new name for file
     new_name = "NEW_" + str(file_name)
