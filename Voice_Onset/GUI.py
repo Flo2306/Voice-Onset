@@ -337,7 +337,6 @@ class Page3(tk.Frame):
                     target_language = self.language
 
                     if self.df is not None:
-                        print(self.df)
                         # CSV file selected, proceed as before
                         matching_rows = self.df[self.df["File_name"] == name_of_audio]
                         if not matching_rows.empty:
