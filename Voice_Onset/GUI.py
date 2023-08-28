@@ -172,7 +172,6 @@ class Page2(tk.Frame):
 
             # If the user selected a file, open it as a pandas dataframe
             df_series = pd.read_csv(file_path, sep = None, engine='python')
-    
             self.df = pd.DataFrame(df_series)
 
     # Callback function when "Confirm" button is clicked
@@ -312,7 +311,6 @@ class Page3(tk.Frame):
                     file_directory = os.path.join(self.base_directory, directory_name)
                     os.chdir(file_directory)
                     
-
                     # Read the current status if the DataFrame is not empty
                     if not self.df_current.empty:
                         self.df_current = pd.read_csv(os.path.join(self.base_directory, 'current_status.csv'))
@@ -339,6 +337,7 @@ class Page3(tk.Frame):
                     target_language = self.language
 
                     if self.df is not None:
+                        print(self.df)
                         # CSV file selected, proceed as before
                         matching_rows = self.df[self.df["File_name"] == name_of_audio]
                         if not matching_rows.empty:
@@ -351,7 +350,8 @@ class Page3(tk.Frame):
                     else:
                         # No CSV file selected, handle accordingly
                         outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
-
+                        correct_answer = None
+                        
                     # Create a new row for the current processing result
                     if correct_answer:
                         new_row = {'FileName': file, 'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'TargetWord': target_word, 'CorrectAnswer': correct_answer, 'RestartAttempts': restart_attempts}
