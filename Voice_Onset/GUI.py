@@ -180,6 +180,7 @@ class Page2(tk.Frame):
                     nothing = 0
 
             self.df = pd.DataFrame(df_series)
+            print(self.df)
 
     # Callback function when "Confirm" button is clicked
     def confirm(self):
