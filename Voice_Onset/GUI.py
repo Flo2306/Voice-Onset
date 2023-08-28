@@ -171,7 +171,7 @@ class Page2(tk.Frame):
             self.file_path = file_path
 
             # If the user selected a file, open it as a pandas dataframe
-            df_series = pd.read_csv(file_path)
+            df_series = pd.read_csv(file_path, delimiter=None)
             self.df = pd.DataFrame(df_series)
 
     # Callback function when "Confirm" button is clicked
