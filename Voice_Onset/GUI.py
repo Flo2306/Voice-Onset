@@ -171,7 +171,14 @@ class Page2(tk.Frame):
             self.file_path = file_path
 
             # If the user selected a file, open it as a pandas dataframe
-            df_series = pd.read_csv(file_path, delimiter=None)
+            possible_delimiters = [',', '\t', ';', '|']  # Add more as needed
+            for delimiter in possible_delimiters:
+                try:
+                    df_series = pd.read_csv(file_path, delimiter=delimiter)
+                    break
+                except pd.errors.ParserError:
+                    nothing = 0
+
             self.df = pd.DataFrame(df_series)
 
     # Callback function when "Confirm" button is clicked
