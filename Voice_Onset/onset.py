@@ -89,6 +89,8 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
     """
     #Creating a audio file that can be used for input. This file will be called "NEW_" plus the name of 
     #the original audio file but it will be removed once the code is finished
+    print("What the FUCK")
+    
     if adjustment_needed == 0:
         audio_input = adjust_audio_input(audio_input)
 
