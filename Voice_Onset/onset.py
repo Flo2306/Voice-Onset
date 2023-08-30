@@ -346,17 +346,21 @@ def word_recognizer(sound_file, language):
     """
 
     #Creating a list for the output 
+    print("1")
+    print(sound_file)
     list_for_output = []
     r = sr.Recognizer()
     # open the file
     with sr.AudioFile(sound_file) as source:
         try:
             #Removes some noise from file using the first 0.2 seconds as a baseline
+            print("2")
             r.adjust_for_ambient_noise(source, duration = 0.2)
             # listen for the data (load audio to memory)
             audio_data = r.record(source)
             # recognize (convert from speech to text)
             text = r.recognize_google(audio_data, language=language, show_all=True)
+            print("3")
             
             words_found = list(text.values())
             #Complicated for loop to deal with return data from r.recongnize_google 
