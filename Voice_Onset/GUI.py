@@ -41,7 +41,7 @@ class GUI(tk.Tk):
         close_button.pack()
 
     # Callback function to be called when Page2 is confirmed
-    def on_confirm(self):
+    def on_confirm(self, high_accuracy):
         if self.page2.df is None:
             # No CSV file selected, handle accordingly
             self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
