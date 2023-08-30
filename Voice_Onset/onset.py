@@ -89,7 +89,7 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
     """
     #Creating a audio file that can be used for input. This file will be called "NEW_" plus the name of 
     #the original audio file but it will be removed once the code is finished
-    print("What the FUCK")
+    print("1")
     
     if adjustment_needed == 0:
         audio_input = adjust_audio_input(audio_input)
@@ -149,6 +149,8 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
 
     mid_offset = int(mid * original_sample_rate)
 
+    print("2")
+
     # Cut the audio file starting from the mid value
     output_audio_path = "cut_audio.wav"
     soundfile.write(output_audio_path, audio_data[mid_offset:], original_sample_rate)
@@ -172,6 +174,7 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
 
         #Used for set up of the model. 
         if run_already == 0:
+            print("3")
             words_found = word_recognizer(audio_input, language = language_used)
             if target_word:
                 #Finding the potential words in the audio input
@@ -211,7 +214,7 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
                     os.remove(audio_input)
                     #This is where the message is returned that the response was too different from the original word/target
                     return "INVALID", 0
-                    
+        print("4")
         source.__exit__(None, None, None)    
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
