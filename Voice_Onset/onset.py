@@ -21,7 +21,7 @@ import time
 import psutil
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-def binary_search(audio_input, language_used, target_word = None, correct_answer = True, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = "", high_accuracy = False): 
+def binary_search(audio_input, language_used, target_word = None, high_accuracy = False, model = 'all-mpnet-base-v2', decision_value = 0.8, offset = 0, onset = 0.1, increment_increase = 0.001, list_of_increment_values = [1], list_needed = 0, adjustment_needed = 0, run_already = 0, words_found = [], best_word = "", correct_answer = True, cosine_similarity = True): 
     """Function using binary search in combination wih transcripion to estimate word onset.
 
     This function can estimate the onset time of a audio file by repeately splitting the file 
@@ -41,6 +41,13 @@ def binary_search(audio_input, language_used, target_word = None, correct_answer
     target_word: str 
         The target word picked will be compared to a transcribed version of the whole audio 
         recording that was entered (adjusting for offset and onset).
+    high_accuracy: binary 
+        If this is set to true, the algorithm will consistently try a second approach (whisper) in case the first 
+        approach (google transcribe) does not find a word. This will make the algorithm a lot longer but it 
+        can be used to make sure that the results are double checked.
+    model: string
+        This specifies the selected model for the NLP part of the code that establishes the cosine similarity. 
+        For a list of available models, see https://www.sbert.net/docs/pretrained_models.html
     decision_value: float 
         This is the value deciding whether the words are similar enough or not. The values we
         have found are 0.8 for very simila/the same word and 0.6 for words in the same category 
@@ -69,20 +76,16 @@ def binary_search(audio_input, language_used, target_word = None, correct_answer
         This list includes all the potential words found in the transcribt of the audio file. 
     best_word: string
         This is the word that has the best similarity value with the target word
-    high_accuracy: binary 
-        If this is set to true, the algorithm will consistently try a second approach (whisper) in case the first 
-        approach (google transcribe) does not find a word. This will make the algorithm a lot longer but it 
-        can be used to make sure that the results are double checked.
     
     Returns
     -------
     best_word : string
         Returns the word with the highest cosine similaity which then was used to make the algorithm 
         as accurate as possible 
-
     onset_value_found1 : float
         Returns the onset value found by the algorithm 
-
+    correct_answer : string
+        Returns the used target word to make it easier to see what the said word vs. the target word is
     """
     #Creating a audio file that can be used for input. This file will be called "NEW_" plus the name of 
     #the original audio file but it will be removed once the code is finished
