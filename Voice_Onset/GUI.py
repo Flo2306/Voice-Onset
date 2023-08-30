@@ -312,6 +312,14 @@ class Page3(tk.Frame):
                         except:
                             continue
 
+                    if file == "cut_audio.wav":
+                        try:
+                            # Remove temporary files and continue to the next iteration
+                            os.remove(file)
+                            continue
+                        except:
+                            continue
+
                     directory_name = os.path.dirname(file)
                     
                     file_directory = os.path.join(self.base_directory, directory_name)
