@@ -506,7 +506,7 @@ qtconsole @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_
 QtPy @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_4e5ppuhz0f/croots/recipe/qtpy_1662014536017/work
 questplus==2019.4
 regex @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_978efa21-43f5-4f43-9f25-acd8393817ddce2xcjaf/croots/recipe/regex_1658257186496/work
-reportlab==3.6.9
+reportlab>=3.6.13
 requests @ file:///opt/conda/conda-bld/requests_1641824580448/work
 requests-ftp==0.3.1
 requests-oauthlib==1.3.1
