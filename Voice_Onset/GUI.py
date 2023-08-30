@@ -46,12 +46,12 @@ class GUI(tk.Tk):
             # No CSV file selected, handle accordingly
             self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
                                self.page2.file_path, None, self.page2.cutoff_value,
-                               self.page1.model_combo.get())
+                               self.page1.model_combo.get(), high_accuracy)
         else:
             # CSV file selected, proceed as before
             self.page3 = Page3(self.notebook, self.page2.base_directory, self.page2.language,
                                self.page2.file_path, self.page2.df, self.page2.cutoff_value,
-                               self.page1.model_combo.get())
+                               self.page1.model_combo.get(), high_accuracy)
             
         # Add Page3 to the notebook and select it
         self.notebook.add(self.page3, text="Page 3")
@@ -147,6 +147,10 @@ class Page2(tk.Frame):
         self.selected_file = tk.Label(self)
         self.selected_file.pack()
 
+        self.high_accuracy_var = tk.BooleanVar()
+        self.high_accuracy_checkbox = tk.Checkbutton(self, text="High Accuracy (Will take longer to run)", variable=self.high_accuracy_var)
+        self.high_accuracy_checkbox.pack()
+
         self.confirm_button = tk.Button(self, text="Confirm", command=self.confirm)
         self.confirm_button.pack()
 
@@ -179,11 +183,12 @@ class Page2(tk.Frame):
         # Get the user input for the language to use
         text_input = self.input_entry.get()
         self.language = text_input
-        self.on_confirm()  # Call the on_confirm method provided by the GUI class
+        high_accuracy = self.high_accuracy_var.get()  # Get the value of the checkbutton
+        self.on_confirm(high_accuracy)  # Call the on_confirm method provided by the GUI class
 
 # Define Page3 class
 class Page3(tk.Frame):
-    def __init__(self, parent, base_directory, language, file_path, df, cut_off_value, model_name):
+    def __init__(self, parent, base_directory, language, file_path, df, cut_off_value, model_name, high_accuracy):
         # Initialize the Page3 instance with relevant data and GUI elements
         tk.Frame.__init__(self, parent)
 
@@ -194,6 +199,7 @@ class Page3(tk.Frame):
         self.df = df
         self.cut_off_value = cut_off_value
         self.model_name = model_name
+        self.high_accuracy = high_accuracy
 
         # Create labels to display progress information
         self.progress_label = tk.Label(self, text="Progress:")
@@ -342,13 +348,13 @@ class Page3(tk.Frame):
                         if not matching_rows.empty:
                             target_word = matching_rows["Target"].values[0]
                             target_language = self.df[self.df["File_name"] == name_of_audio]["Language"].values[0]
-                            outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name)
+                            outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = self.high_accuracy)
                         else:
-                            outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
+                            outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = self.high_accuracy)
                             outcome_word = "File not found in CSV file"
                     else:
                         # No CSV file selected, handle accordingly
-                        outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name)
+                        outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = high_accuracy)
                         correct_answer = None
                         
                     # Create a new row for the current processing result
