@@ -339,7 +339,7 @@ class Page3(tk.Frame):
                     print(file)
 
                     if self.df is not None:
-                        print("DF found)
+                        print("DF found")
                         # CSV file selected, proceed as before
                         matching_rows = self.df[self.df["File_name"] == name_of_audio]
                         if not matching_rows.empty:
