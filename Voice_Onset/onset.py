@@ -176,6 +176,7 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
         if run_already == 0:
             print("3")
             words_found = word_recognizer(audio_input, language = language_used)
+            print("4")
             if target_word:
                 #Finding the potential words in the audio input
                 cosine_similarity_list = []
@@ -197,7 +198,8 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
                     best_word = words_found[index_for_word]
                 else: 
                     best_word = "INVALID"
-                
+
+                print("5")
                 #Checking if the best value we found is higher than the decision value, otherwise the loop continues
                 if best_cosine_value < decision_value:
                     correct_answer = False
