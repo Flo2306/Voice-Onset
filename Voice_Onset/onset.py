@@ -89,7 +89,6 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
     """
     #Creating a audio file that can be used for input. This file will be called "NEW_" plus the name of 
     #the original audio file but it will be removed once the code is finished
-    print("1")
     
     if adjustment_needed == 0:
         audio_input = adjust_audio_input(audio_input)
@@ -149,8 +148,6 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
 
     mid_offset = int(mid * original_sample_rate)
 
-    print("2")
-
     # Cut the audio file starting from the mid value
     output_audio_path = "cut_audio.wav"
     soundfile.write(output_audio_path, audio_data[mid_offset:], original_sample_rate)
@@ -174,9 +171,7 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
 
         #Used for set up of the model. 
         if run_already == 0:
-            print("3")
             words_found = word_recognizer(audio_input, language = language_used)
-            print("4")
             if target_word:
                 #Finding the potential words in the audio input
                 cosine_similarity_list = []
@@ -199,7 +194,6 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
                 else: 
                     best_word = "INVALID"
 
-                print("5")
                 #Checking if the best value we found is higher than the decision value, otherwise the loop continues
                 if best_cosine_value < decision_value:
                     correct_answer = False
@@ -216,7 +210,7 @@ def binary_search(audio_input, language_used, target_word = None, high_accuracy 
                     os.remove(audio_input)
                     #This is where the message is returned that the response was too different from the original word/target
                     return "INVALID", 0
-        print("4")
+                    
         source.__exit__(None, None, None)    
         #This checks whether the best word we found is in the audio file and then runs the recursion
         if best_word in text_str: 
@@ -346,21 +340,19 @@ def word_recognizer(sound_file, language):
     """
 
     #Creating a list for the output 
-    print("1")
-    print(sound_file)
+    
     list_for_output = []
     r = sr.Recognizer()
     # open the file
     with sr.AudioFile(sound_file) as source:
         try:
             #Removes some noise from file using the first 0.2 seconds as a baseline
-            print("2")
+            
             r.adjust_for_ambient_noise(source, duration = 0.2)
             # listen for the data (load audio to memory)
             audio_data = r.record(source)
             # recognize (convert from speech to text)
             text = r.recognize_google(audio_data, language=language, show_all=True)
-            print("3")
             
             words_found = list(text.values())
             #Complicated for loop to deal with return data from r.recongnize_google 
