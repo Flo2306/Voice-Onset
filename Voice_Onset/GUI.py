@@ -257,7 +257,7 @@ class Page3(tk.Frame):
     def estimate_remaining_time(self, iteration, total_iterations, deque):
         mean_deque = float(sum(deque)/len(deque))
         iterations_left = total_iterations - iteration
-        time_left = float(mean_deque * iterations_left)
+        remaining_time = float(mean_deque * iterations_left)
 
         time_parts = []
         days = int(remaining_time // (3600 * 24))
