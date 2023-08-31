@@ -201,7 +201,7 @@ class Page3(tk.Frame):
         self.cut_off_value = cut_off_value
         self.model_name = model_name
         self.high_accuracy = high_accuracy  
-        self.last_n_iterations = 10  # Number of iterations to consider for averaging
+        self.last_n_iterations = 100  # Number of iterations to consider for averaging
         self.start_times = deque(maxlen=self.last_n_iterations)  # Use deque to store start times
 
         # Create labels to display progress information
