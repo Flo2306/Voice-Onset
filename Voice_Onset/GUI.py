@@ -258,8 +258,28 @@ class Page3(tk.Frame):
         mean_deque = float(sum(deque)/len(deque))
         iterations_left = total_iterations - iteration
         time_left = float(mean_deque * iterations_left)
-        minutes, seconds = divmod(time_left, 60)
-        return minutes, seconds
+
+        time_parts = []
+        days = int(remaining_time // (3600 * 24))
+        if days > 0:
+            time_parts.append("{} day{}".format(days, "s" if days > 1 else ""))
+        
+        remaining_time %= (3600 * 24)
+        hours = int(remaining_time // 3600)
+        if hours > 0:
+            time_parts.append("{} hour{}".format(hours, "s" if hours > 1 else ""))
+        
+        remaining_time %= 3600
+        minutes = int(remaining_time // 60)
+        if minutes > 0:
+            time_parts.append("{} minute{}".format(minutes, "s" if minutes > 1 else ""))
+        
+        seconds = int(remaining_time % 60)
+        if seconds > 0:
+            time_parts.append("{} second{}".format(seconds, "s" if seconds > 1 else ""))
+        
+        formatted_time = ":".join(time_parts)
+        return formatted_time
         
     # Start the processing of audio files
     def start_processing(self):
@@ -390,8 +410,8 @@ class Page3(tk.Frame):
                     end_time = time.time()
                     self.start_times.append(end_time - start_time)
 
-                    minutes, seconds = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_times)
-                    formatted_time = "{:02d}:{:02d}".format(int(minutes), int(seconds))
+                    formatted_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_times)
+                
                     self.time_label.config(text="Time left: {}".format(formatted_time))
                   
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
