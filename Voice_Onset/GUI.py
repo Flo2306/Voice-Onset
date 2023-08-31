@@ -391,8 +391,9 @@ class Page3(tk.Frame):
                     self.start_times.append(end_time - start_time)
 
                     minutes, seconds = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_times)
-                    self.time_label.config(text="Time left: {} minutes {} seconds".format(minutes, seconds))
-                    
+                    formatted_time = "{:02d}:{:02d}".format(int(minutes), int(seconds))
+                    self.time_label.config(text="Time left: {}".format(formatted_time))
+                  
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
                
                     # Update the GUI window (if needed)
