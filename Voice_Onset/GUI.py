@@ -9,6 +9,7 @@ from pathlib import Path as path
 from Voice_Onset import onset 
 import time
 import sys
+from collections import deque
 
 # Define the main GUI class
 class GUI(tk.Tk):
