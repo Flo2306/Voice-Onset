@@ -257,15 +257,14 @@ class Page3(tk.Frame):
 
     # Estimate the remaining time based on the last n iterations
     def estimate_remaining_time(self, iteration, total_iterations, start_times):
-        if iteration >= self.last_n_iterations:
+        if iteration >= self.last_n_iterations and len(start_times) >= self.last_n_iterations:
             elapsed_time = time.time() - start_times[-self.last_n_iterations]
             average_time_per_iteration = elapsed_time / self.last_n_iterations
             remaining_iterations = total_iterations - iteration
             remaining_time = average_time_per_iteration * remaining_iterations
             return round(remaining_time / 60, 2)
         else:
-            return 0  # Not enough data for accurate estimation
-
+            return 0
 
     # Start the processing of audio files
     def start_processing(self):
