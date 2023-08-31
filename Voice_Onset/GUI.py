@@ -200,6 +200,9 @@ class Page3(tk.Frame):
         self.cut_off_value = cut_off_value
         self.model_name = model_name
         self.high_accuracy = high_accuracy
+        self.start_times = []  # List to store start times of each iteration
+        self.last_n_iterations = 10  # Number of iterations to consider for averaging
+
 
         # Create labels to display progress information
         self.progress_label = tk.Label(self, text="Progress:")
@@ -243,26 +246,26 @@ class Page3(tk.Frame):
         self.list_of_outcome_values = []
         self.list_of_file_names = []
 
-    # Update the progress bar and time estimate
     def update_progress(self, value):
         self.progress['value'] = value
         self.update_idletasks()
 
-        # Estimate the remaining time based on current progress
-        remaining_time = self.estimate_remaining_time(value, len(self.keys), self.start_time)
+        # Estimate the remaining time based on recent iterations
+        remaining_time = self.estimate_remaining_time(value, len(self.keys), self.start_times)
         self.count_label.config(text="Iteration count: {}".format(value))
         self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
-    # Estimate the remaining time for the entire process
-    def estimate_remaining_time(self, completed_iterations, total_iterations, start_time):
-        if completed_iterations == 0:
-            return 0
-            
-        elapsed_time = time.time() - start_time
-        average_time_per_iteration = elapsed_time / completed_iterations
-        remaining_iterations = total_iterations - completed_iterations
-        remaining_time = average_time_per_iteration * remaining_iterations
-        return round(remaining_time / 60, 2)
+    # Estimate the remaining time based on the last n iterations
+    def estimate_remaining_time(self, iteration, total_iterations, start_times):
+        if iteration >= self.last_n_iterations:
+            elapsed_time = time.time() - start_times[-self.last_n_iterations]
+            average_time_per_iteration = elapsed_time / self.last_n_iterations
+            remaining_iterations = total_iterations - iteration
+            remaining_time = average_time_per_iteration * remaining_iterations
+            return round(remaining_time / 60, 2)
+        else:
+            return 0  # Not enough data for accurate estimation
+
 
     # Start the processing of audio files
     def start_processing(self):
@@ -351,6 +354,10 @@ class Page3(tk.Frame):
                     # Update the progress bar and labels
                     self.update_progress(iteration)
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
+
+                    self.start_times.append(time.time())
+                    if len(self.start_times) > self.last_n_iterations:
+                        self.start_times.pop(0)  # Remove the oldest start time
 
                     # Define the target language
                     target_language = self.language
