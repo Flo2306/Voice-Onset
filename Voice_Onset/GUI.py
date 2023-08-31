@@ -255,12 +255,14 @@ class Page3(tk.Frame):
 
     # Estimate the remaining time for the entire process
     def estimate_remaining_time(self, completed_iterations, total_iterations, start_time):
+        if completed_iterations == 0:
+            return 0
+            
         elapsed_time = time.time() - start_time
         average_time_per_iteration = elapsed_time / completed_iterations
         remaining_iterations = total_iterations - completed_iterations
         remaining_time = average_time_per_iteration * remaining_iterations
         return round(remaining_time / 60, 2)
-
 
     # Start the processing of audio files
     def start_processing(self):
