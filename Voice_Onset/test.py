@@ -21,23 +21,22 @@ class TestBinarySearch(unittest.TestCase):
 
     def test_binary_search(self):
         # Test with English audio file and target word "hello"
-        audio_path = self.get_audio_directory("001_1.wav")
-        audio_file = '001_1.wav'
+        audio_path = self.get_audio_directory("004_1.wav")
+        audio_file = '004_1.wav'
         os.chdir(audio_path)
-        language_used = "en-US"
-        target_word = "hello"
-        found_word, onset_value_found = onset.binary_search(audio_file, language_used, target_word, decision_value=0)
-        self.assertAlmostEqual(float(onset_value_found), 0.6498, places=2)
+        language_used = "en-UK"
+        target_word = "dog"
+        found_word, onset_value_found, correct_answer = onset.binary_search(audio_file, language_used, target_word, decision_value=0)
+        self.assertAlmostEqual(float(onset_value_found), 0.8150, places=2)
         print("Test English Audio File passed")
 
-        
-        audio_path = self.get_audio_directory("002_1.wav")
+        audio_path_german = self.get_audio_directory("002_1.wav")
+        os.chdir(audio_path_german)
         audio_input = "002_1.wav"
-        os.chdir(audio_path)
         language_used = "de-DE"
-        target_word = "hallo"
-        found_word, onset_value_found = onset.binary_search(audio_input, language_used, target_word, decision_value= 0)
-        self.assertAlmostEqual(float(onset_value_found), 1.021, places=2)
+        target_word = "hund"
+        found_word, onset_value_found, correct_answer = onset.binary_search(audio_input, language_used, target_word, decision_value= 0)
+        self.assertAlmostEqual(float(onset_value_found), 0.9850, places=2)
         print("Test German Audio File passed")
 
     def test_cosine_similarity(self):
@@ -72,3 +71,4 @@ class TestBinarySearch(unittest.TestCase):
 
 if __name__ == '__main__':
     run_tests()
+
