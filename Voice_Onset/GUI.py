@@ -255,11 +255,11 @@ class Page3(tk.Frame):
 
     # Estimate the remaining time based on the last n iterations
     def estimate_remaining_time(self, iteration, total_iterations, deque):
-        print(deque)
         mean_deque = float(sum(deque)/len(deque))
         iterations_left = total_iterations - iteration
         time_left = float(mean_deque * iterations_left)
-        return time_left
+        minutes, seconds = divmod(time_taken_seconds, 60)
+        return minutes, seconds
         
     # Start the processing of audio files
     def start_processing(self):
@@ -390,9 +390,9 @@ class Page3(tk.Frame):
                     end_time = time.time()
                     self.start_times.append(end_time - start_time)
 
-                    remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_times)
-                    self.time_label.config(text="Time left: {} minutes".format(remaining_time))
-    
+                    minutes, seconds = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_times)
+                    self.time_label.config(text="Time left: {} minutes {} seconds".format(minutes, seconds))
+                    
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
                
                     # Update the GUI window (if needed)
