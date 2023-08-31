@@ -358,7 +358,7 @@ class Page3(tk.Frame):
                             target_language = self.df[self.df["File_name"] == name_of_audio]["Language"].values[0]
                             outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, target_word=target_word, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = self.high_accuracy)
                         else:
-                            outcome_word, outcome_value, correct_answer = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = self.high_accuracy)
+                            outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = self.high_accuracy)
                             outcome_word = "File not found in CSV file"
                     else:
                         # No CSV file selected, handle accordingly
