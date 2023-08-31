@@ -251,12 +251,11 @@ class Page3(tk.Frame):
         self.update_idletasks()
 
         # Estimate the remaining time based on recent iterations
-        remaining_time = self.estimate_remaining_time(value, len(self.keys), self.start_times)
         self.count_label.config(text="Iteration count: {}".format(value))
-        self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
     # Estimate the remaining time based on the last n iterations
     def estimate_remaining_time(self, iteration, total_iterations, deque):
+        print(deque)
         mean_deque = float(sum(deque)/len(deque))
         iterations_left = total_iterations - iteration
         time_left = float(mean_deque * iterations_left)
