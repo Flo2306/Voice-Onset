@@ -254,7 +254,7 @@ class Page3(tk.Frame):
         self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
     # Estimate the remaining time for the entire process
-   def estimate_remaining_time(self, completed_iterations, total_iterations, start_time):
+    def estimate_remaining_time(self, completed_iterations, total_iterations, start_time):
         elapsed_time = time.time() - start_time
         average_time_per_iteration = elapsed_time / completed_iterations
         remaining_iterations = total_iterations - completed_iterations
