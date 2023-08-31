@@ -266,6 +266,7 @@ class Page3(tk.Frame):
         else:
             return 0
 
+
     # Start the processing of audio files
     def start_processing(self):
         # Update the GUI to show the used directory and file information
