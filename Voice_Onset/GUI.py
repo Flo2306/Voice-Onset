@@ -256,17 +256,12 @@ class Page3(tk.Frame):
         self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
     # Estimate the remaining time based on the last n iterations
-    def estimate_remaining_time(self, iteration, total_iterations, start_time):
-        if len(self.start_times) >= self.last_n_iterations:
-            elapsed_time = time.time() - self.start_times[0]
-            average_time_per_iteration = elapsed_time / self.last_n_iterations
-            remaining_iterations = total_iterations - iteration
-            remaining_time = average_time_per_iteration * remaining_iterations
-            return round(remaining_time / 60, 2)
-        else:
-            return 0
-
-
+    def estimate_remaining_time(self, iteration, total_iterations, deque):
+        mean_deque = float(sum(deque)/len(deque))
+        iterations_left = total_iterations - iteration
+        time_left = float(mean_deque * iterations_left)
+        return time_left
+        
     # Start the processing of audio files
     def start_processing(self):
         # Update the GUI to show the used directory and file information
@@ -312,6 +307,7 @@ class Page3(tk.Frame):
                 # Iterate over each file in the list
                 iterations_this_time = 0
                 for iteration, file in enumerate(files_list):
+                    start_time = time.time()
                     if file.startswith("NEW"):
                         try:
                             # Remove temporary files and continue to the next iteration
@@ -355,7 +351,6 @@ class Page3(tk.Frame):
                     self.update_progress(iteration)
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
 
-                    self.start_times.append(time.time())
                     if len(self.start_times) > self.last_n_iterations:
                         self.start_times.pop(0)  # Remove the oldest start time
 
@@ -393,9 +388,10 @@ class Page3(tk.Frame):
                     self.df_current.to_csv(os.path.join(self.base_directory, 'current_status.csv'), index=False)
 
                     # Update the GUI window with the remaining iterations and time estimate
-                    self.start_times.append(time.time())
+                    end_time = time.time()
+                    self.start_times.append(end_time - start_time)
 
-                    remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_time)
+                    remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_times)
                     self.time_label.config(text="Time left: {} minutes".format(remaining_time))
     
                     self.count_label.config(text="Iteration count: {}".format(iteration + 1))
