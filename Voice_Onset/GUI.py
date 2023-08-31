@@ -397,7 +397,7 @@ class Page3(tk.Frame):
                     if correct_answer:
                         new_row = {'FileName': file, 'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'TargetWord': target_word, 'CorrectAnswer': correct_answer, 'RestartAttempts': restart_attempts}
                     else: 
-                        new_row = {'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'FileName': file, 'TargetWord': target_word, 'RestartAttempts': restart_attempts}
+                        new_row = {'OnsetTime': outcome_value, 'SaidWord': outcome_word, 'FileName': file, 'RestartAttempts': restart_attempts}
                     new_row_df = pd.DataFrame(new_row, index=[0])
 
                     # Concatenate the new row DataFrame with the main DataFrame
