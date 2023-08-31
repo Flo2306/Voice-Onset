@@ -258,7 +258,7 @@ class Page3(tk.Frame):
         mean_deque = float(sum(deque)/len(deque))
         iterations_left = total_iterations - iteration
         time_left = float(mean_deque * iterations_left)
-        minutes, seconds = divmod(time_taken_seconds, 60)
+        minutes, seconds = divmod(time_left, 60)
         return minutes, seconds
         
     # Start the processing of audio files
