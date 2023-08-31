@@ -199,10 +199,9 @@ class Page3(tk.Frame):
         self.df = df
         self.cut_off_value = cut_off_value
         self.model_name = model_name
-        self.high_accuracy = high_accuracy
-        self.start_times = []  # List to store start times of each iteration
+        self.high_accuracy = high_accuracy  
         self.last_n_iterations = 10  # Number of iterations to consider for averaging
-
+        self.start_times = deque(maxlen=self.last_n_iterations)  # Use deque to store start times
 
         # Create labels to display progress information
         self.progress_label = tk.Label(self, text="Progress:")
@@ -256,9 +255,9 @@ class Page3(tk.Frame):
         self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
     # Estimate the remaining time based on the last n iterations
-    def estimate_remaining_time(self, iteration, total_iterations, start_times):
-        if iteration >= self.last_n_iterations and len(start_times) >= self.last_n_iterations:
-            elapsed_time = time.time() - start_times[-self.last_n_iterations]
+    def estimate_remaining_time(self, iteration, total_iterations, start_time):
+        if len(self.start_times) >= self.last_n_iterations:
+            elapsed_time = time.time() - self.start_times[0]
             average_time_per_iteration = elapsed_time / self.last_n_iterations
             remaining_iterations = total_iterations - iteration
             remaining_time = average_time_per_iteration * remaining_iterations
@@ -393,6 +392,8 @@ class Page3(tk.Frame):
                     self.df_current.to_csv(os.path.join(self.base_directory, 'current_status.csv'), index=False)
 
                     # Update the GUI window with the remaining iterations and time estimate
+                    self.start_times.append(time.time())
+
                     remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_time)
                     self.time_label.config(text="Time left: {} minutes".format(remaining_time))
     
