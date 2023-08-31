@@ -254,10 +254,13 @@ class Page3(tk.Frame):
         self.time_label.config(text="Time left: {} minutes".format(remaining_time))
 
     # Estimate the remaining time for the entire process
-    def estimate_remaining_time(self, iteration, total_iterations, start_time):
+   def estimate_remaining_time(self, completed_iterations, total_iterations, start_time):
         elapsed_time = time.time() - start_time
-        remaining_time = (elapsed_time / (iteration + 1)) * (total_iterations - (iteration + 1))
+        average_time_per_iteration = elapsed_time / completed_iterations
+        remaining_iterations = total_iterations - completed_iterations
+        remaining_time = average_time_per_iteration * remaining_iterations
         return round(remaining_time / 60, 2)
+
 
     # Start the processing of audio files
     def start_processing(self):
@@ -381,11 +384,11 @@ class Page3(tk.Frame):
                     self.df_current.to_csv(os.path.join(self.base_directory, 'current_status.csv'), index=False)
 
                     # Update the GUI window with the remaining iterations and time estimate
-                    remaining_iterations = len(self.keys) - (iteration)
-                    remaining_time = self.estimate_remaining_time(iterations_this_time, len(files_list), self.start_time)
-                    self.count_label.config(text="Iteration count: {}".format(iteration + 1))
+                    remaining_time = self.estimate_remaining_time(iteration + 1, len(files_list), self.start_time)
                     self.time_label.config(text="Time left: {} minutes".format(remaining_time))
-
+    
+                    self.count_label.config(text="Iteration count: {}".format(iteration + 1))
+               
                     # Update the GUI window (if needed)
                     self.update()
                     self.after(100)
