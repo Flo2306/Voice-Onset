@@ -278,7 +278,7 @@ class Page3(tk.Frame):
         if seconds > 0:
             time_parts.append("{} second{}".format(seconds, "s" if seconds > 1 else ""))
         
-        formatted_time = ":".join(time_parts)
+        formatted_time = ", ".join(time_parts)
         return formatted_time
         
     # Start the processing of audio files
