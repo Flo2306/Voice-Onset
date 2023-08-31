@@ -390,7 +390,7 @@ class Page3(tk.Frame):
                             target_word = "File not found in CSV file"
                     else:
                         # No CSV file selected, handle accordingly
-                        outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = high_accuracy)
+                        outcome_word, outcome_value = onset.binary_search(name_of_audio, target_language, decision_value=self.cut_off_value, model=self.model_name, high_accuracy = self.high_accuracy)
                         correct_answer = None
                         
                     # Create a new row for the current processing result
