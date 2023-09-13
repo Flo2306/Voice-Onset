@@ -41,6 +41,31 @@ GUI()
 
 The GUI should open now from which you can continue everything automatically yourself. 
 
+# Performance
+
+Given that this approach is used to find voice onset times, it is important to consider multiple factors of this module such as reliability and validity. To do so, multiple different datasets were analysed and compared in terms of the test-retest reliablitiy, concurrent validity, and construct validity. 
+
+## Test-retest reliability 
+
+To investigate whether our model performed consitsently, the same data was analysed twice. Onset times from the second time were subtracted from the first time. The mean and sd of this variable should be equal to 0 as this would indicate consistency across trials. The results for 458 audio files collected in the experiment described above show that the mean and sd of the variable were exactly equal to 0. Therefore, this approach has high test-retrest reliability. 
+
+## Concurrent validitiy 
+
+To investigate the concurrent validity of our model, we compared our results both to previous data which was marked by human raters as well as using Chronset (Roux et al., 2016) on the 458 observations mentioned above. Human raters are regared as the gold-standard of voice onset and Chronset has been able to very accurately predict these values. 
+
+## Write part about Chronset, need to change values from ms to s. 
+
+Secondly, the relationship between our model and values previously annontated by human raters were compared to the values returned by our model. In total, 2559 audio files were compared. Assumptions were checked but no violation of the assumptions was found. There was a significant positive correlation between the onset times from our model and the onset times from human rater, r(2559) = .89, p < .001. Additionally, a linear regression with the onset times of the human raters as a dependent variable and the onset times of our model as the independent variable was run. The results show that our model predicts the values accurately, R^2 = .789, F(1, 2554) = 9537.63, p <.001. Based on these results, our model perform similar to the onset times of human raters. 
+
+## Construct Validity 
+
+To investigate the construct validity of our model, we added five seconds of silence at the beginning of each of the 458 audio files. If our model had construct validity, we found find that the difference between our original onset times and the onset times with five seconds of silence is exactly 5s. As we violated the assumption of normality for this variable, we used a non-parametric Wilcoxon sign-rank test. We found a mean of 4.93 and a sd of 0.428. However, this also includes some potential outliers that were not removed from the data to keep a realisitc representation of the performance. The results indicate that there was no difference between our created variable and 5s, W (457) = 50143.00, p = .395. Therefore, we can conclude that our approach also has construct validity. 
+
+## Conclusion
+
+Based on these results, we can see that our approach works and delivers accurate estimations of voice onset data. However, Chronset (Roux et al., 2016) performs better than our model based on the results of their study. Future improvements in accuracy of voice transcription could also lead to improved accuracy of this approach. However, currently Chronset outperforms our approach. One advantage of our approach is the already mentioned NLP use which allows for complete automation of the analysis. 
+
+
 # Troubleshooting 
 
 ## Issue with FLAC
