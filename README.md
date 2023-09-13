@@ -53,7 +53,11 @@ To investigate whether our model performed consitsently, the same data was analy
 
 To investigate the concurrent validity of our model, we compared our results both to previous data which was marked by human raters as well as using Chronset (Roux et al., 2016) on the 458 observations mentioned above. Human raters are regared as the gold-standard of voice onset and Chronset has been able to very accurately predict these values. 
 
-## Write part about Chronset, need to change values from ms to s. 
+### Comparison to Chronset. 
+
+To investigate the relationship between our model and 
+
+### Comparison to Human Raters
 
 Secondly, the relationship between our model and values previously annontated by human raters were compared to the values returned by our model. In total, 2559 audio files were compared. Assumptions were checked but no violation of the assumptions was found. There was a significant positive correlation between the onset times from our model and the onset times from human rater, r(2559) = .89, p < .001. Additionally, a linear regression with the onset times of the human raters as a dependent variable and the onset times of our model as the independent variable was run. The results show that our model predicts the values accurately, R^2 = .789, F(1, 2554) = 9537.63, p <.001. Based on these results, our model perform similar to the onset times of human raters. 
 
