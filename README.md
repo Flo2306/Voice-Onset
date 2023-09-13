@@ -55,7 +55,7 @@ To investigate the concurrent validity of our model, we compared our results bot
 
 ### Comparison to Chronset. 
 
-To investigate the relationship between our model and 
+To investigate the relationship between our model and Chronset, we compared the 458 observations as estimated by our model to the values estimated by Chronset. As normality was violated for this analysis, a spearman correlation was used. The results indciate that our model was significantly correlated to the onset times of Chronset, r(458) = .88, p < 0.001. Additonally, a linear regression with the onset time of Chronset as the dependent variablea and the values estimated by our model as the independent variable was conducted. The results show that our model predicts the value of Chronset accurately, R^2 = .84, F(1, 456) = 2474.58, p < .001. Based on these results, our model performs similar to the onset times of Chronset. 
 
 ### Comparison to Human Raters
 
@@ -67,7 +67,7 @@ To investigate the construct validity of our model, we added five seconds of sil
 
 ## Conclusion
 
-Based on these results, we can see that our approach works and delivers accurate estimations of voice onset data. However, Chronset (Roux et al., 2016) performs better than our model based on the results of their study. Future improvements in accuracy of voice transcription could also lead to improved accuracy of this approach. However, currently Chronset outperforms our approach. One advantage of our approach is the already mentioned NLP use which allows for complete automation of the analysis. 
+Based on these results, we can see that our approach works and delivers accurate estimations of voice onset data. However, Chronset (Roux et al., 2016) performs better than our model based on the results of their study. Future improvements in accuracy of voice transcription could lead to improved accuracy of this approach. However, currently Chronset outperforms our approach. One advantage of our approach is the already mentioned NLP use which allows for complete automation of the analysis. 
 
 
 # Troubleshooting 
